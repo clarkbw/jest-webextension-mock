@@ -48,3 +48,21 @@ And add that file to your `setupFiles`:
 yarn install
 yarn test
 ```
+
+## Pull Request
+
+Before every PR run the following:
+
+```
+yarn run prettier
+```
+
+## Publish
+
+When publishing a new build, run the following:
+
+```
+yarn run prettier
+yarn run build
+yarn publish
+```
