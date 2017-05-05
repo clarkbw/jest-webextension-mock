@@ -1,6 +1,3 @@
-// Chrome globals are setup in the "jest" property of the package.json
-// This setup file sets the chrome global with mock functions
-
 import { omnibox } from './omnibox';
 import { tabs } from './tabs';
 
