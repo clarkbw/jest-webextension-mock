@@ -28,6 +28,8 @@
   },
   "jest": {
     "bail": true,
+    "coverageDirectory": "./coverage/",
+    "collectCoverage": true,
     "setupFiles": [
       "./__setups__/chrome.js"
     ]
