@@ -1,0 +1,11 @@
+language: node_js
+node_js:
+  - node
+env:
+- NODE_ENV=TEST
+cache:
+  yarn: true
+  directories:
+    - node_modules
+after_success:
+ - bash <(curl -s https://codecov.io/bash)
