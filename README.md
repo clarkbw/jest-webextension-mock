@@ -1,6 +1,8 @@
 
 ## Install
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/clarkbw/jest-webextension-mock.svg)](https://greenkeeper.io/)
+
 For yarn:
 
 ```bash
