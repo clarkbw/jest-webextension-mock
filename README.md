@@ -35,7 +35,7 @@ Alternatively you can create a new setup file and require this module.
 
 `__setups__/chrome.js`
 ```js
-global.chrome = require('jest-webextension-mock');
+require('jest-webextension-mock');
 ```
 
 And add that file to your `setupFiles`:
