@@ -80,9 +80,51 @@ incognito: false,
 */
 var TAB = {};
 
+var runtime = {
+  connect: jest.fn(function (_ref) {
+    var name = _ref.name;
+
+    var connection = {
+      name: name,
+      postMessage: jest.fn(),
+      onDisconnect: {
+        addListener: jest.fn()
+      }
+    };
+    return connection;
+  }),
+  sendMessage: jest.fn(function (message) {
+    var callback = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : function () {};
+    return callback();
+  }),
+  onMessage: {
+    addListener: jest.fn()
+  },
+  onConnect: {
+    addListener: jest.fn()
+  }
+};
+
+var geckoProfiler = {
+  stop: jest.fn(),
+  start: jest.fn(),
+  pause: jest.fn(),
+  resume: jest.fn(),
+  getProfile: jest.fn(),
+  getProfileAsArrayBuffer: jest.fn(),
+  getSymbols: jest.fn(function (debugName, breakpadId) {
+    return this;
+  }),
+  onRunning: {
+    addListener: jest.fn()
+  }
+};
+
 var chrome = {
   omnibox: omnibox,
-  tabs: tabs
+  tabs: tabs,
+  runtime: runtime,
+  geckoProfiler: geckoProfiler
 };
 
  // Firefox uses 'browser' but aliases it to chrome
@@ -94,3 +136,15 @@ var chrome = {
  */
 global.chrome = chrome;
 global.browser = chrome;
+
+// Firefox specific globals
+// if (navigator.userAgent.indexOf('Firefox') !== -1) {
+// https://developer.mozilla.org/en-US/Add-ons/WebExtensions/Content_scripts#exportFunction
+global.exportFunction = jest.fn(function (func) {
+  return func;
+});
+// https://developer.mozilla.org/en-US/Add-ons/WebExtensions/Content_scripts#cloneInto
+global.cloneInto = jest.fn(function (obj) {
+  return obj;
+});
+// }
