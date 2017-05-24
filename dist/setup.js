@@ -120,6 +120,7 @@ var geckoProfiler = {
   }
 };
 
+// Firefox specific API
 var chrome = {
   omnibox: omnibox,
   tabs: tabs,
