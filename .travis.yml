@@ -9,3 +9,6 @@ cache:
     - node_modules
 after_success:
  - bash <(curl -s https://codecov.io/bash)
+before_install: yarn global add greenkeeper-lockfile@1
+before_script: greenkeeper-lockfile-update
+after_script: greenkeeper-lockfile-upload
