@@ -105,6 +105,78 @@ var runtime = {
   }
 };
 
+var storage = {
+  sync: {
+    get: jest.fn(function (id) {
+      var cb = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : function () {};
+      return cb();
+    }),
+    getBytesInUse: jest.fn(function (id) {
+      var cb = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : function () {};
+      return cb();
+    }),
+    set: jest.fn(function (id) {
+      var cb = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : function () {};
+      return cb();
+    }),
+    remove: jest.fn(function (id) {
+      var cb = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : function () {};
+      return cb();
+    }),
+    clear: jest.fn(function () {
+      var cb = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : function () {};
+      return cb();
+    })
+  },
+  local: {
+    get: jest.fn(function (id) {
+      var cb = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : function () {};
+      return cb();
+    }),
+    getBytesInUse: jest.fn(function (id) {
+      var cb = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : function () {};
+      return cb();
+    }),
+    set: jest.fn(function (id) {
+      var cb = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : function () {};
+      return cb();
+    }),
+    remove: jest.fn(function (id) {
+      var cb = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : function () {};
+      return cb();
+    }),
+    clear: jest.fn(function () {
+      var cb = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : function () {};
+      return cb();
+    })
+  },
+  managed: {
+    get: jest.fn(function (id) {
+      var cb = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : function () {};
+      return cb();
+    }),
+    getBytesInUse: jest.fn(function (id) {
+      var cb = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : function () {};
+      return cb();
+    }),
+    set: jest.fn(function (id) {
+      var cb = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : function () {};
+      return cb();
+    }),
+    remove: jest.fn(function (id) {
+      var cb = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : function () {};
+      return cb();
+    }),
+    clear: jest.fn(function () {
+      var cb = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : function () {};
+      return cb();
+    })
+  },
+  onChanged: {
+    addListener: jest.fn()
+  }
+};
+
 var geckoProfiler = {
   stop: jest.fn(),
   start: jest.fn(),
@@ -120,10 +192,12 @@ var geckoProfiler = {
   }
 };
 
+// Firefox specific API
 var chrome = {
   omnibox: omnibox,
   tabs: tabs,
   runtime: runtime,
+  storage: storage,
   geckoProfiler: geckoProfiler
 };
 
