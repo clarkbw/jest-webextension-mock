@@ -64,6 +64,8 @@ describe('browser.tabs', () => {
     expect(chrome.tabs.update).toHaveBeenCalledTimes(1);
     expect(callback).toHaveBeenCalledTimes(1);
     expect(callback).toHaveBeenCalledWith({ id: 1, pinned: true });
+    chrome.tabs.update(props);
+    expect(chrome.tabs.update).toHaveBeenCalledTimes(2);
   });
   test('move', done => {
     const callback = jest.fn(() => done());
