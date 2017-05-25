@@ -109,69 +109,99 @@ var runtime = {
 
 var storage = {
   sync: {
-    get: jest.fn(function (id) {
-      var cb = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : function () {};
-      return cb();
+    get: jest.fn(function (id, cb) {
+      if (cb !== undefined) {
+        return cb({ id: id });
+      }
+      return Promise.resolve({ id: id });
     }),
-    getBytesInUse: jest.fn(function (id) {
-      var cb = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : function () {};
-      return cb();
+    getBytesInUse: jest.fn(function (id, cb) {
+      if (cb !== undefined) {
+        return cb({ id: id });
+      }
+      return Promise.resolve({ id: id });
     }),
-    set: jest.fn(function (id) {
-      var cb = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : function () {};
-      return cb();
+    set: jest.fn(function (id, cb) {
+      if (cb !== undefined) {
+        return cb({ id: id });
+      }
+      return Promise.resolve({ id: id });
     }),
-    remove: jest.fn(function (id) {
-      var cb = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : function () {};
-      return cb();
+    remove: jest.fn(function (id, cb) {
+      if (cb !== undefined) {
+        return cb({ id: id });
+      }
+      return Promise.resolve({ id: id });
     }),
-    clear: jest.fn(function () {
-      var cb = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : function () {};
-      return cb();
+    clear: jest.fn(function (cb) {
+      if (cb !== undefined) {
+        return cb();
+      }
+      return Promise.resolve();
     })
   },
   local: {
-    get: jest.fn(function (id) {
-      var cb = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : function () {};
-      return cb();
+    get: jest.fn(function (id, cb) {
+      if (cb !== undefined) {
+        return cb({ id: id });
+      }
+      return Promise.resolve({ id: id });
     }),
-    getBytesInUse: jest.fn(function (id) {
-      var cb = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : function () {};
-      return cb();
+    getBytesInUse: jest.fn(function (id, cb) {
+      if (cb !== undefined) {
+        return cb({ id: id });
+      }
+      return Promise.resolve({ id: id });
     }),
-    set: jest.fn(function (id) {
-      var cb = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : function () {};
-      return cb();
+    set: jest.fn(function (id, cb) {
+      if (cb !== undefined) {
+        return cb({ id: id });
+      }
+      return Promise.resolve({ id: id });
     }),
-    remove: jest.fn(function (id) {
-      var cb = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : function () {};
-      return cb();
+    remove: jest.fn(function (id, cb) {
+      if (cb !== undefined) {
+        return cb({ id: id });
+      }
+      return Promise.resolve({ id: id });
     }),
-    clear: jest.fn(function () {
-      var cb = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : function () {};
-      return cb();
+    clear: jest.fn(function (cb) {
+      if (cb !== undefined) {
+        return cb();
+      }
+      return Promise.resolve();
     })
   },
   managed: {
-    get: jest.fn(function (id) {
-      var cb = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : function () {};
-      return cb();
+    get: jest.fn(function (id, cb) {
+      if (cb !== undefined) {
+        return cb({ id: id });
+      }
+      return Promise.resolve({ id: id });
     }),
-    getBytesInUse: jest.fn(function (id) {
-      var cb = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : function () {};
-      return cb();
+    getBytesInUse: jest.fn(function (id, cb) {
+      if (cb !== undefined) {
+        return cb({ id: id });
+      }
+      return Promise.resolve({ id: id });
     }),
-    set: jest.fn(function (id) {
-      var cb = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : function () {};
-      return cb();
+    set: jest.fn(function (id, cb) {
+      if (cb !== undefined) {
+        return cb({ id: id });
+      }
+      return Promise.resolve({ id: id });
     }),
-    remove: jest.fn(function (id) {
-      var cb = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : function () {};
-      return cb();
+    remove: jest.fn(function (id, cb) {
+      if (cb !== undefined) {
+        return cb({ id: id });
+      }
+      return Promise.resolve({ id: id });
     }),
-    clear: jest.fn(function () {
-      var cb = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : function () {};
-      return cb();
+    clear: jest.fn(function (cb) {
+      if (cb !== undefined) {
+        return cb();
+      }
+      return Promise.resolve();
     })
   },
   onChanged: {
