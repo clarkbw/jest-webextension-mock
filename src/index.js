@@ -2,6 +2,7 @@ import { omnibox } from './omnibox';
 import { tabs } from './tabs';
 import { runtime } from './runtime';
 import { storage } from './storage';
+import { browserAction } from './browserAction';
 
 // Firefox specific API
 import { geckoProfiler } from './geckoProfiler';
@@ -11,6 +12,7 @@ const chrome = {
   tabs,
   runtime,
   storage,
+  browserAction,
   geckoProfiler,
 };
 
