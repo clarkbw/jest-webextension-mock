@@ -20,65 +20,67 @@ var omnibox = {
 
 // https://developer.chrome.com/extensions/tabs
 
-var RT_TAB = function RT_TAB() {
-  return TAB;
-};
-
 var tabs = {
   get: jest.fn(function () {
     var id = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
-    var cb = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : RT_TAB;
-    return cb(TAB);
+    var cb = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : function () {};
+    return cb({});
   }),
   getCurrent: jest.fn(function (cb) {
-    return cb(TAB);
+    return cb({});
   }),
-  connect: jest.fn(), // id, obj
+  connect: jest.fn(function () {
+    var id = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
+    var info = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
+    // returns a Port
+    return {
+      name: info.name,
+      disconnect: jest.fn(),
+      onDisconnect: {
+        addListener: jest.fn()
+      },
+      onMessage: {
+        addListener: jest.fn()
+      },
+      postMessage: jest.fn()
+    };
+  }),
   create: jest.fn(function () {
     var props = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-    var cb = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : RT_TAB;
-    return cb(Object.assign(props, TAB));
+    var cb = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : function () {};
+    return cb(props);
   }),
   duplicate: jest.fn(function () {
     var id = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
-    var cb = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : RT_TAB;
-    return cb(Object.assign(TAB, { id: id }));
+    var cb = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : function () {};
+    return cb(Object.assign({}, { id: id }));
   }),
   query: jest.fn(function () {
     var query = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
-    var cb = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : RT_TAB;
-    return cb([TAB]);
+    var cb = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : function () {};
+    return cb([{}]);
   }),
   highlight: jest.fn(function () {
     var info = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-    var cb = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : RT_TAB;
+    var cb = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : function () {};
     return cb();
   }),
   update: jest.fn(function () {
     var id = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
     var props = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-    var cb = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : RT_TAB;
-    return cb(TAB);
+    var cb = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : function () {};
+    return cb(Object.assign({}, props, { id: id }));
   }),
   move: jest.fn(function () {
     var ids = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
     var props = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-    var cb = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : RT_TAB;
-    return cb([TAB]);
+    var cb = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : function () {};
+    return cb(ids.map(function (id) {
+      return Object.assign({}, props, { id: id });
+    }));
   })
 };
-
-/*
-index: 1,
-windowId: 1,
-highlighted: false,
-active: false,
-pinned: false,
-discarded: false,
-autoDiscardable: false,
-incognito: false,
-*/
-var TAB = {};
 
 var runtime = {
   connect: jest.fn(function (_ref) {

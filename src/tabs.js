@@ -1,31 +1,31 @@
 // https://developer.chrome.com/extensions/tabs
 
-const RT_TAB = () => TAB;
-
 export const tabs = {
-  get: jest.fn((id = '', cb = RT_TAB) => cb(TAB)),
-  getCurrent: jest.fn(cb => cb(TAB)),
-  connect: jest.fn(), // id, obj
-  create: jest.fn((props = {}, cb = RT_TAB) => cb(Object.assign(props, TAB))),
-  duplicate: jest.fn((id = '', cb = RT_TAB) => cb(Object.assign(TAB, { id }))),
-  query: jest.fn((query = '', cb = RT_TAB) => cb([TAB])),
-  highlight: jest.fn((info = {}, cb = RT_TAB) => cb()),
-  update: jest.fn((id = '', props = {}, cb = RT_TAB) => cb(TAB)),
-  move: jest.fn((ids = [], props = {}, cb = RT_TAB) => cb([TAB])),
+  get: jest.fn((id = '', cb = () => {}) => cb({})),
+  getCurrent: jest.fn(cb => cb({})),
+  connect: jest.fn((id = '', info = {}) => {
+    // returns a Port
+    return {
+      name: info.name,
+      disconnect: jest.fn(),
+      onDisconnect: {
+        addListener: jest.fn(),
+      },
+      onMessage: {
+        addListener: jest.fn(),
+      },
+      postMessage: jest.fn(),
+      // TODO: add sender
+    };
+  }),
+  create: jest.fn((props = {}, cb = () => {}) => cb(props)),
+  duplicate: jest.fn((id = '', cb = () => {}) => cb(Object.assign({}, { id }))),
+  query: jest.fn((query = '', cb = () => {}) => cb([{}])),
+  highlight: jest.fn((info = {}, cb = () => {}) => cb()),
+  update: jest.fn((id = '', props = {}, cb = () => {}) =>
+    cb(Object.assign({}, props, { id }))
+  ),
+  move: jest.fn((ids = [], props = {}, cb = () => {}) =>
+    cb(ids.map(id => Object.assign({}, props, { id })))
+  ),
 };
-
-/*
-index: 1,
-windowId: 1,
-highlighted: false,
-active: false,
-pinned: false,
-discarded: false,
-autoDiscardable: false,
-incognito: false,
-*/
-let TAB = {};
-
-export function mock(tab) {
-  TAB = tab;
-}
