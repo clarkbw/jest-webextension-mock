@@ -3,6 +3,7 @@ import { tabs } from './tabs';
 import { runtime } from './runtime';
 import { storage } from './storage';
 import { browserAction } from './browserAction';
+import { commands } from './commands';
 
 // Firefox specific API
 import { geckoProfiler } from './geckoProfiler';
@@ -13,6 +14,7 @@ const chrome = {
   runtime,
   storage,
   browserAction,
+  commands,
   geckoProfiler,
 };
 

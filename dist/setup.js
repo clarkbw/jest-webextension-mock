@@ -232,28 +232,54 @@ var browserAction = {
   }
 };
 
+// https://developer.chrome.com/extensions/commands
+
+var commands = {
+  getAll: jest.fn(function (cb) {
+    if (cb !== undefined) {
+      return cb();
+    }
+    return Promise.resolve();
+  }),
+  onCommand: {
+    addListener: jest.fn()
+  }
+};
+
 var geckoProfiler = {
-  stop: jest.fn(),
-  start: jest.fn(),
-  pause: jest.fn(),
-  resume: jest.fn(),
-  getProfile: jest.fn(),
-  getProfileAsArrayBuffer: jest.fn(),
+  stop: jest.fn(function () {
+    return Promise.resolve();
+  }),
+  start: jest.fn(function () {
+    return Promise.resolve();
+  }),
+  pause: jest.fn(function () {
+    return Promise.resolve();
+  }),
+  resume: jest.fn(function () {
+    return Promise.resolve();
+  }),
+  getProfile: jest.fn(function () {
+    return Promise.resolve();
+  }),
+  getProfileAsArrayBuffer: jest.fn(function () {
+    return Promise.resolve();
+  }),
   getSymbols: jest.fn(function (debugName, breakpadId) {
-    return this;
+    return Promise.resolve();
   }),
   onRunning: {
     addListener: jest.fn()
   }
 };
 
-// Firefox specific API
 var chrome = {
   omnibox: omnibox,
   tabs: tabs,
   runtime: runtime,
   storage: storage,
   browserAction: browserAction,
+  commands: commands,
   geckoProfiler: geckoProfiler
 };
 
