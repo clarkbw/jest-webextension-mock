@@ -1,33 +1,33 @@
 describe('browser.tabs', () => {
   test('get', done => {
     const callback = jest.fn(() => done());
-    expect(jest.isMockFunction(chrome.tabs.get));
+    expect(jest.isMockFunction(chrome.tabs.get)).toBe(true);
     chrome.tabs.get(1, callback);
     expect(chrome.tabs.get).toHaveBeenCalledTimes(1);
     expect(callback).toHaveBeenCalledTimes(1);
   });
   test('getCurrent', done => {
     const callback = jest.fn(() => done());
-    expect(jest.isMockFunction(chrome.tabs.getCurrent));
+    expect(jest.isMockFunction(chrome.tabs.getCurrent)).toBe(true);
     chrome.tabs.getCurrent(callback);
     expect(chrome.tabs.getCurrent).toHaveBeenCalledTimes(1);
     expect(callback).toHaveBeenCalledTimes(1);
   });
   test('connect', () => {
     const name = 'CONNECT_NAME';
-    expect(jest.isMockFunction(chrome.tabs.connect));
+    expect(jest.isMockFunction(chrome.tabs.connect)).toBe(true);
     const connection = chrome.tabs.connect(1, { name });
     expect(connection.name).toEqual(name);
-    expect(jest.isMockFunction(connection.disconnect));
-    expect(jest.isMockFunction(connection.postMessage));
-    expect(jest.isMockFunction(connection.onDisconnect.addListener));
-    expect(jest.isMockFunction(connection.onMessage.addListener));
+    expect(jest.isMockFunction(connection.disconnect)).toBe(true);
+    expect(jest.isMockFunction(connection.postMessage)).toBe(true);
+    expect(jest.isMockFunction(connection.onDisconnect.addListener)).toBe(true);
+    expect(jest.isMockFunction(connection.onMessage.addListener)).toBe(true);
     expect(chrome.tabs.connect).toHaveBeenCalledTimes(1);
   });
   test('create', done => {
     const callback = jest.fn(() => done());
     const props = { pinned: true };
-    expect(jest.isMockFunction(chrome.tabs.create));
+    expect(jest.isMockFunction(chrome.tabs.create)).toBe(true);
     chrome.tabs.create(props, callback);
     expect(chrome.tabs.create).toHaveBeenCalledTimes(1);
     expect(callback).toHaveBeenCalledTimes(1);
@@ -35,7 +35,7 @@ describe('browser.tabs', () => {
   });
   test('duplicate', done => {
     const callback = jest.fn(() => done());
-    expect(jest.isMockFunction(chrome.tabs.duplicate));
+    expect(jest.isMockFunction(chrome.tabs.duplicate)).toBe(true);
     chrome.tabs.duplicate(1, callback);
     expect(chrome.tabs.create).toHaveBeenCalledTimes(1);
     expect(callback).toHaveBeenCalledTimes(1);
@@ -43,7 +43,7 @@ describe('browser.tabs', () => {
   });
   test('query', done => {
     const callback = jest.fn(() => done());
-    expect(jest.isMockFunction(chrome.tabs.query));
+    expect(jest.isMockFunction(chrome.tabs.query)).toBe(true);
     chrome.tabs.query({ pinned: true }, callback);
     expect(chrome.tabs.query).toHaveBeenCalledTimes(1);
     expect(callback).toHaveBeenCalledTimes(1);
@@ -51,7 +51,7 @@ describe('browser.tabs', () => {
   });
   test('highlight', done => {
     const callback = jest.fn(() => done());
-    expect(jest.isMockFunction(chrome.tabs.highlight));
+    expect(jest.isMockFunction(chrome.tabs.highlight)).toBe(true);
     chrome.tabs.highlight({}, callback);
     expect(chrome.tabs.highlight).toHaveBeenCalledTimes(1);
     expect(callback).toHaveBeenCalledTimes(1);
@@ -59,7 +59,7 @@ describe('browser.tabs', () => {
   test('update', done => {
     const callback = jest.fn(() => done());
     const props = { pinned: true };
-    expect(jest.isMockFunction(chrome.tabs.update));
+    expect(jest.isMockFunction(chrome.tabs.update)).toBe(true);
     chrome.tabs.update(1, props, callback);
     expect(chrome.tabs.update).toHaveBeenCalledTimes(1);
     expect(callback).toHaveBeenCalledTimes(1);
@@ -70,7 +70,7 @@ describe('browser.tabs', () => {
   test('move', done => {
     const callback = jest.fn(() => done());
     const props = { pinned: true };
-    expect(jest.isMockFunction(chrome.tabs.move));
+    expect(jest.isMockFunction(chrome.tabs.move)).toBe(true);
     chrome.tabs.move([1, 2, 3], props, callback);
     expect(chrome.tabs.move).toHaveBeenCalledTimes(1);
     expect(callback).toHaveBeenCalledTimes(1);
