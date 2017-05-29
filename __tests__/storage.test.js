@@ -1,7 +1,9 @@
 describe('browser.storage', () => {
   test('onChanged.addListener', () => {
     const callback = jest.fn();
-    expect(jest.isMockFunction(browser.storage.onChanged.addListener));
+    expect(jest.isMockFunction(browser.storage.onChanged.addListener)).toBe(
+      true
+    );
     browser.storage.onChanged.addListener(callback);
     expect(browser.storage.onChanged.addListener).toHaveBeenCalledTimes(1);
     expect(callback).toHaveBeenCalledTimes(0);
@@ -14,7 +16,7 @@ describe('browser.storage', () => {
       const storage = browser.storage[type];
       test('get', done => {
         const callback = jest.fn(() => done());
-        expect(jest.isMockFunction(storage.get));
+        expect(jest.isMockFunction(storage.get)).toBe(true);
         storage.get(1, callback);
         expect(storage.get).toHaveBeenCalledTimes(1);
         expect(callback).toBeCalled();
@@ -24,7 +26,7 @@ describe('browser.storage', () => {
       });
       test('getBytesInUse', done => {
         const callback = jest.fn(() => done());
-        expect(jest.isMockFunction(storage.getBytesInUse));
+        expect(jest.isMockFunction(storage.getBytesInUse)).toBe(true);
         storage.getBytesInUse(1, callback);
         expect(storage.getBytesInUse).toHaveBeenCalledTimes(1);
         expect(callback).toBeCalled();
@@ -36,7 +38,7 @@ describe('browser.storage', () => {
       });
       test('set', done => {
         const callback = jest.fn(() => done());
-        expect(jest.isMockFunction(storage.set));
+        expect(jest.isMockFunction(storage.set)).toBe(true);
         storage.set(1, callback);
         expect(storage.set).toHaveBeenCalledTimes(1);
         expect(callback).toBeCalled();
@@ -46,7 +48,7 @@ describe('browser.storage', () => {
       });
       test('remove', done => {
         const callback = jest.fn(() => done());
-        expect(jest.isMockFunction(storage.remove));
+        expect(jest.isMockFunction(storage.remove)).toBe(true);
         storage.remove(1, callback);
         expect(storage.remove).toHaveBeenCalledTimes(1);
         expect(callback).toBeCalled();
@@ -56,7 +58,7 @@ describe('browser.storage', () => {
       });
       test('clear', done => {
         const callback = jest.fn(() => done());
-        expect(jest.isMockFunction(browser.storage.sync.clear));
+        expect(jest.isMockFunction(browser.storage.sync.clear)).toBe(true);
         storage.clear(callback);
         expect(storage.clear).toHaveBeenCalledTimes(1);
         expect(callback).toBeCalled();
