@@ -18,7 +18,12 @@ export const tabs = {
       // TODO: add sender
     };
   }),
-  create: jest.fn((props = {}, cb = () => {}) => cb(props)),
+  create: jest.fn((props = {}, cb) => {
+    if (cb !== undefined) {
+      return cb(props);
+    }
+    return Promise.resolve(props);
+  }),
   duplicate: jest.fn((id = '', cb = () => {}) => cb(Object.assign({}, { id }))),
   query: jest.fn((query = '', cb = () => {}) => cb([{}])),
   highlight: jest.fn((info = {}, cb = () => {}) => cb()),
