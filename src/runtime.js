@@ -9,7 +9,12 @@ export const runtime = {
     };
     return connection;
   }),
-  sendMessage: jest.fn((message, callback = () => {}) => callback()),
+  sendMessage: jest.fn((message, cb) => {
+    if (cb !== undefined) {
+      return cb();
+    }
+    return Promise.resolve();
+  }),
   onMessage: {
     addListener: jest.fn(),
   },
