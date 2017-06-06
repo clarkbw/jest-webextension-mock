@@ -33,11 +33,15 @@ describe('browser.tabs', () => {
     expect(callback).toHaveBeenCalledTimes(1);
     expect(callback).toHaveBeenCalledWith(props);
   });
+  test('create promise', () => {
+    const props = { pinned: true };
+    return expect(chrome.tabs.create(props)).resolves.toBe(props);
+  });
   test('duplicate', done => {
     const callback = jest.fn(() => done());
     expect(jest.isMockFunction(chrome.tabs.duplicate)).toBe(true);
     chrome.tabs.duplicate(1, callback);
-    expect(chrome.tabs.create).toHaveBeenCalledTimes(1);
+    expect(chrome.tabs.duplicate).toHaveBeenCalledTimes(1);
     expect(callback).toHaveBeenCalledTimes(1);
     expect(callback).toHaveBeenCalledWith({ id: 1 });
   });

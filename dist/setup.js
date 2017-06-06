@@ -48,8 +48,12 @@ var tabs = {
   }),
   create: jest.fn(function () {
     var props = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-    var cb = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : function () {};
-    return cb(props);
+    var cb = arguments[1];
+
+    if (cb !== undefined) {
+      return cb(props);
+    }
+    return Promise.resolve(props);
   }),
   duplicate: jest.fn(function () {
     var id = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
@@ -95,9 +99,11 @@ var runtime = {
     };
     return connection;
   }),
-  sendMessage: jest.fn(function (message) {
-    var callback = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : function () {};
-    return callback();
+  sendMessage: jest.fn(function (message, cb) {
+    if (cb !== undefined) {
+      return cb();
+    }
+    return Promise.resolve();
   }),
   onMessage: {
     addListener: jest.fn()
