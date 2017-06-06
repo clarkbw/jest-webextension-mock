@@ -2797,7 +2797,7 @@ rollup-pluginutils@^1.5.0:
     estree-walker "^0.2.1"
     minimatch "^3.0.2"
 
-rollup-watch@4.0.0:
+rollup-watch@^4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/rollup-watch/-/rollup-watch-4.0.0.tgz#309051b9403b9e5445c5746c9eba9a466951d39e"
   dependencies:

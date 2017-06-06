@@ -14,6 +14,11 @@ describe('browser.runtime', () => {
     browser.runtime.sendMessage({ test: 'message' }, callback);
     expect(browser.runtime.sendMessage).toHaveBeenCalledTimes(1);
     expect(callback).toHaveBeenCalledTimes(1);
+    browser.runtime.sendMessage({ test: 'message' });
+    expect(browser.runtime.sendMessage).toHaveBeenCalledTimes(2);
+  });
+  test('sendMessage promise', () => {
+    return expect(browser.runtime.sendMessage({})).resolves.toBeUndefined();
   });
   test('onMessage.addListener', () => {
     expect(jest.isMockFunction(browser.runtime.onMessage.addListener)).toBe(
