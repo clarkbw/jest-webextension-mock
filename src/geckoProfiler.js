@@ -5,9 +5,7 @@ export const geckoProfiler = {
   resume: jest.fn(() => Promise.resolve()),
   getProfile: jest.fn(() => Promise.resolve()),
   getProfileAsArrayBuffer: jest.fn(() => Promise.resolve()),
-  getSymbols: jest.fn(function(debugName, breakpadId) {
-    return Promise.resolve();
-  }),
+  getSymbols: jest.fn((debugName, breakpadId) => Promise.resolve()),
   onRunning: {
     addListener: jest.fn(),
   },
