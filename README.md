@@ -50,7 +50,7 @@ And add that file to your `setupFiles`:
 
 ## Usage
 
-With this module setup in Jest you can start relying on it in your tests.
+Use this module to check that API calls were made when expected.
 
 ```js
 describe('your function to test', () => {
@@ -70,6 +70,27 @@ describe('your function to test', () => {
     expect(chrome.tabs.update).toHaveBeenCalledWith({
       url: 'https://example.com/'
     });
+  });
+});
+```
+
+And you can reset the API mocks to ensure APIs are only called when needed.
+
+```js
+beforeEach(() => {
+  browser.geckoProfiler.start.mockClear();
+  browser.geckoProfiler.stop.mockClear();
+});
+
+it('should toggle the profiler on from stopped', () => {
+  const store = mockStore(reducer(undefined, {}));
+  const expectedActions = [
+    { type: 'PROFILER_START', status: 'start' },
+    { type: 'PROFILER_START', status: 'done' },
+  ];
+  return store.dispatch(actions.toggle()).then(() => {
+    expect(browser.geckoProfiler.start).toHaveBeenCalledTimes(1);
+    expect(store.getActions()).toEqual(expectedActions);
   });
 });
 ```
