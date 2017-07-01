@@ -95,6 +95,9 @@ var runtime = {
       postMessage: jest.fn(),
       onDisconnect: {
         addListener: jest.fn()
+      },
+      onMessage: {
+        addListener: jest.fn()
       }
     };
     return connection;
@@ -279,6 +282,7 @@ var geckoProfiler = {
   }
 };
 
+// Firefox specific API
 var chrome = {
   omnibox: omnibox,
   tabs: tabs,

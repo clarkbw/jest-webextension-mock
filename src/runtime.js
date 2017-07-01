@@ -6,6 +6,9 @@ export const runtime = {
       onDisconnect: {
         addListener: jest.fn(),
       },
+      onMessage: {
+        addListener: jest.fn(),
+      },
     };
     return connection;
   }),

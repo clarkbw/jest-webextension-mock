@@ -6,6 +6,7 @@ describe('browser.runtime', () => {
     expect(connection.name).toEqual(name);
     expect(jest.isMockFunction(connection.postMessage)).toBe(true);
     expect(jest.isMockFunction(connection.onDisconnect.addListener)).toBe(true);
+    expect(jest.isMockFunction(connection.onMessage.addListener)).toBe(true);
     expect(browser.runtime.connect).toHaveBeenCalledTimes(1);
   });
   test('sendMessage', done => {
