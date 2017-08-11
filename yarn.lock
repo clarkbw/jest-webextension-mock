@@ -2701,9 +2701,9 @@ rimraf@2, rimraf@^2.2.8, rimraf@^2.5.1, rimraf@^2.6.1:
   dependencies:
     glob "^7.0.5"
 
-rollup-plugin-babel@3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/rollup-plugin-babel/-/rollup-plugin-babel-3.0.0.tgz#b309df407eed78890006cede35b601ea11b773f9"
+rollup-plugin-babel@^3.0.0:
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/rollup-plugin-babel/-/rollup-plugin-babel-3.0.1.tgz#e1b75bc3a6ea876bb8ec747562b344b15e27c94e"
   dependencies:
     rollup-pluginutils "^1.5.0"
 
@@ -2730,11 +2730,9 @@ rollup-watch@^4.0.0:
     chokidar "^1.7.0"
     require-relative "0.8.7"
 
-rollup@^0.45.1:
-  version "0.45.2"
-  resolved "https://registry.yarnpkg.com/rollup/-/rollup-0.45.2.tgz#63a284c2b31234656f24e9e9717fabb6a7f0fa43"
-  dependencies:
-    source-map-support "^0.4.0"
+rollup@0.46.0:
+  version "0.46.0"
+  resolved "https://registry.yarnpkg.com/rollup/-/rollup-0.46.0.tgz#98b1cd282cbfaa0f823c339a5623b61d0f1bec2a"
 
 run-async@^2.2.0:
   version "2.3.0"
@@ -2806,7 +2804,7 @@ sntp@1.x.x:
   dependencies:
     hoek "2.x.x"
 
-source-map-support@^0.4.0, source-map-support@^0.4.2:
+source-map-support@^0.4.2:
   version "0.4.15"
   resolved "https://registry.yarnpkg.com/source-map-support/-/source-map-support-0.4.15.tgz#03202df65c06d2bd8c7ec2362a193056fef8d3b1"
   dependencies:
