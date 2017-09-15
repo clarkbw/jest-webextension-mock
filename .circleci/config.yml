@@ -23,7 +23,7 @@ jobs:
           - v1-dependencies-
 
       # setup greenkeeper-lockfile
-      - run: yarn global add greenkeeper-lockfile@1
+      - run: sudo yarn global add greenkeeper-lockfile@1
 
       - run: yarn install
 
