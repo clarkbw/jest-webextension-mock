@@ -14,47 +14,86 @@ describe('browser.storage', () => {
   ['sync', 'local', 'managed'].forEach(type => {
     describe(type, () => {
       const storage = browser.storage[type];
-      test('get', done => {
-        const callback = jest.fn(() => done());
+      describe('get', () => {
         expect(jest.isMockFunction(storage.get)).toBe(true);
-        storage.get(1, callback);
-        expect(storage.get).toHaveBeenCalledTimes(1);
-        expect(callback).toBeCalled();
+        test('a string key', done => {
+          const key = 'test';
+          storage.get(key, result => {
+            expect(result).toBeDefined();
+            expect(typeof result === 'object').toBeTruthy();
+            expect(result).toHaveProperty(key, '');
+            done();
+          });
+        });
+        test('an array key', done => {
+          const keys = ['test1', 'test2'];
+          storage.get(keys, result => {
+            expect(result).toBeDefined();
+            expect(typeof result === 'object').toBeTruthy();
+            keys.forEach(k => {
+              expect(result).toHaveProperty(k);
+            });
+            done();
+          });
+        });
+        test('an object key', done => {
+          const key = { test: [] };
+          storage.get(key, result => {
+            expect(result).toBeDefined();
+            expect(typeof result === 'object').toBeTruthy();
+            Object.keys(key).forEach(k => {
+              expect(result).toHaveProperty(k);
+              expect(result[k]).toEqual(key[k]);
+            });
+            done();
+          });
+        });
+        test('a invalid key', () => {
+          try {
+            storage.get(1, jest.fn());
+            expect.toThrow;
+          } catch (e) {
+            expect(e.message).toBe('Wrong key given');
+          }
+        });
+        afterEach(() => {
+          expect(storage.get).toHaveBeenCalledTimes(1);
+          storage.get.mockClear();
+        });
       });
       test('get promise', () => {
-        return expect(storage.get(1)).resolves.toMatchObject({ id: 1 });
+        const key = 'key';
+        return expect(storage.get(key)).resolves.toEqual({ key: '' });
       });
       test('getBytesInUse', done => {
         const callback = jest.fn(() => done());
         expect(jest.isMockFunction(storage.getBytesInUse)).toBe(true);
-        storage.getBytesInUse(1, callback);
+        storage.getBytesInUse('key', callback);
         expect(storage.getBytesInUse).toHaveBeenCalledTimes(1);
         expect(callback).toBeCalled();
       });
       test('getBytesInUse promise', () => {
-        return expect(storage.getBytesInUse(1)).resolves.toMatchObject({
-          id: 1,
-        });
+        return expect(storage.getBytesInUse('key')).resolves.toBe(0);
       });
       test('set', done => {
         const callback = jest.fn(() => done());
         expect(jest.isMockFunction(storage.set)).toBe(true);
-        storage.set(1, callback);
+        storage.set({ key: '' }, callback);
         expect(storage.set).toHaveBeenCalledTimes(1);
         expect(callback).toBeCalled();
       });
       test('set promise', () => {
-        return expect(storage.set(1)).resolves.toMatchObject({ id: 1 });
+        return expect(storage.set(1)).resolves.toBeUndefined();
       });
       test('remove', done => {
         const callback = jest.fn(() => done());
         expect(jest.isMockFunction(storage.remove)).toBe(true);
-        storage.remove(1, callback);
+        storage.remove('key', callback);
         expect(storage.remove).toHaveBeenCalledTimes(1);
         expect(callback).toBeCalled();
       });
       test('remove promise', () => {
-        return expect(storage.remove(1)).resolves.toMatchObject({ id: 1 });
+        return expect(storage.remove(1)).resolves.toBeUndefined();
       });
       test('clear', done => {
         const callback = jest.fn(() => done());
