@@ -14,6 +14,6 @@ export default {
   ],
   output: {
     format: 'cjs',
-    file: 'dist/setup.js'
-  }
+    file: 'dist/setup.js',
+  },
 };
