@@ -104,11 +104,18 @@ yarn test
 
 ## Publish
 
-When publishing a new build, run the following:
+To publish a new release, follow these steps:
 
 ```
+git checkout -b new-release
 yarn run build
 yarn run prettier
+git commit -a -m 'updating to the latest build release'
+# merge pull request, delete branch
+git checkout master
+git pull
 npm version `${version}`
 npm publish
+git push --tags
+## edit release notes
 ```
