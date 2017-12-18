@@ -22,7 +22,6 @@ var omnibox = {
 
 var tabs = {
   get: jest.fn(function () {
-    var id = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
     var cb = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : function () {};
     return cb({});
   }),
@@ -30,7 +29,6 @@ var tabs = {
     return cb({});
   }),
   connect: jest.fn(function () {
-    var id = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
     var info = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
 
     // returns a Port
@@ -44,6 +42,7 @@ var tabs = {
         addListener: jest.fn()
       },
       postMessage: jest.fn()
+      // TODO: add sender
     };
   }),
   create: jest.fn(function () {
@@ -61,12 +60,10 @@ var tabs = {
     return cb(Object.assign({}, { id: id }));
   }),
   query: jest.fn(function () {
-    var query = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
     var cb = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : function () {};
     return cb([{}]);
   }),
   highlight: jest.fn(function () {
-    var info = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
     var cb = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : function () {};
     return cb();
   }),
@@ -116,31 +113,54 @@ var runtime = {
   }
 };
 
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) {
+  return typeof obj;
+} : function (obj) {
+  return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+};
+
+function resolveKey(key) {
+  if (typeof key === 'string') {
+    var result = {};
+    result[key] = '';
+    return result;
+  } else if (Array.isArray(key)) {
+    return key.reduce(function (acc, curr) {
+      acc[curr] = '';
+      return acc;
+    }, {});
+  } else if ((typeof key === 'undefined' ? 'undefined' : _typeof(key)) === 'object') {
+    return key;
+  }
+  throw new Error('Wrong key given');
+}
+
 var storage = {
   sync: {
     get: jest.fn(function (id, cb) {
+      var result = resolveKey(id);
       if (cb !== undefined) {
-        return cb({ id: id });
+        return cb(result);
       }
-      return Promise.resolve({ id: id });
+      return Promise.resolve(result);
     }),
     getBytesInUse: jest.fn(function (id, cb) {
       if (cb !== undefined) {
-        return cb({ id: id });
+        return cb(0);
       }
-      return Promise.resolve({ id: id });
+      return Promise.resolve(0);
     }),
     set: jest.fn(function (id, cb) {
       if (cb !== undefined) {
-        return cb({ id: id });
+        return cb();
       }
-      return Promise.resolve({ id: id });
+      return Promise.resolve();
     }),
     remove: jest.fn(function (id, cb) {
       if (cb !== undefined) {
-        return cb({ id: id });
+        return cb();
       }
-      return Promise.resolve({ id: id });
+      return Promise.resolve();
     }),
     clear: jest.fn(function (cb) {
       if (cb !== undefined) {
@@ -151,28 +171,29 @@ var storage = {
   },
   local: {
     get: jest.fn(function (id, cb) {
+      var result = resolveKey(id);
       if (cb !== undefined) {
-        return cb({ id: id });
+        return cb(result);
       }
-      return Promise.resolve({ id: id });
+      return Promise.resolve(result);
     }),
     getBytesInUse: jest.fn(function (id, cb) {
       if (cb !== undefined) {
-        return cb({ id: id });
+        return cb(0);
       }
-      return Promise.resolve({ id: id });
+      return Promise.resolve(0);
     }),
     set: jest.fn(function (id, cb) {
       if (cb !== undefined) {
-        return cb({ id: id });
+        return cb();
       }
-      return Promise.resolve({ id: id });
+      return Promise.resolve();
     }),
     remove: jest.fn(function (id, cb) {
       if (cb !== undefined) {
-        return cb({ id: id });
+        return cb();
       }
-      return Promise.resolve({ id: id });
+      return Promise.resolve();
     }),
     clear: jest.fn(function (cb) {
       if (cb !== undefined) {
@@ -183,28 +204,29 @@ var storage = {
   },
   managed: {
     get: jest.fn(function (id, cb) {
+      var result = resolveKey(id);
       if (cb !== undefined) {
-        return cb({ id: id });
+        return cb(result);
       }
-      return Promise.resolve({ id: id });
+      return Promise.resolve(result);
     }),
     getBytesInUse: jest.fn(function (id, cb) {
       if (cb !== undefined) {
-        return cb({ id: id });
+        return cb(0);
       }
-      return Promise.resolve({ id: id });
+      return Promise.resolve(0);
     }),
     set: jest.fn(function (id, cb) {
       if (cb !== undefined) {
-        return cb({ id: id });
+        return cb();
       }
-      return Promise.resolve({ id: id });
+      return Promise.resolve();
     }),
     remove: jest.fn(function (id, cb) {
       if (cb !== undefined) {
-        return cb({ id: id });
+        return cb();
       }
-      return Promise.resolve({ id: id });
+      return Promise.resolve();
     }),
     clear: jest.fn(function (cb) {
       if (cb !== undefined) {
