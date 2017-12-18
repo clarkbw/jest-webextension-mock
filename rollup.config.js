@@ -2,8 +2,7 @@ import resolve from 'rollup-plugin-node-resolve';
 import babel from 'rollup-plugin-babel';
 
 export default {
-  entry: 'src/setup.js',
-  format: 'cjs',
+  input: 'src/setup.js',
   plugins: [
     resolve(),
     babel({
@@ -13,5 +12,8 @@ export default {
       plugins: ['external-helpers'],
     }),
   ],
-  dest: 'dist/setup.js',
+  output: {
+    format: 'cjs',
+    file: 'dist/setup.js'
+  }
 };
