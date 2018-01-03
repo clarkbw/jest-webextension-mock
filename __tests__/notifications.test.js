@@ -23,6 +23,14 @@ describe('chrome.notifications', () => {
     expect(callback).toHaveBeenLastCalledWith('id');
   });
 
+  test('create promise', () => {
+    const options = { type: 'basic' };
+
+    return expect(chrome.notifications.create(options)).resolves.toBe(
+      'generated-id'
+    );
+  });
+
   test('update', done => {
     const options = { type: 'basic' };
     const callback = jest.fn(() => done());
@@ -36,5 +44,11 @@ describe('chrome.notifications', () => {
       callback
     );
     expect(callback).toHaveBeenLastCalledWith(true);
+  });
+
+  test('update promise', () => {
+    const options = { type: 'basic' };
+
+    return expect(chrome.notifications.update(options)).resolves.toBe(true);
   });
 });
