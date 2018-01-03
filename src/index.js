@@ -4,6 +4,7 @@ import { runtime } from './runtime';
 import { storage } from './storage';
 import { browserAction } from './browserAction';
 import { commands } from './commands';
+import { notifications } from './notifications';
 
 // Firefox specific API
 import { geckoProfiler } from './geckoProfiler';
@@ -16,6 +17,7 @@ const chrome = {
   browserAction,
   commands,
   geckoProfiler,
+  notifications,
 };
 
 export { chrome };
