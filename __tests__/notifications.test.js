@@ -42,4 +42,25 @@ describe('chrome.notifications', () => {
     );
     expect(callback).toHaveBeenLastCalledWith('my-notification-id');
   });
+
+  test('update', done => {
+    // Same behavior than « create » method, so I will write a very simple test
+    const notificationId = null;
+    const options = {
+      type: 'basic',
+      title: 'Title',
+      message: 'My message',
+      icons: 'image.png',
+    };
+    const callback = jest.fn(() => done());
+
+    chrome.notifications.update(notificationId, options, callback);
+    expect(chrome.notifications.update).toHaveBeenCalledTimes(1);
+    expect(chrome.notifications.update).toHaveBeenLastCalledWith(
+      notificationId,
+      options,
+      callback,
+    );
+    expect(callback).toHaveBeenLastCalledWith('generated-id');
+  });
 });
