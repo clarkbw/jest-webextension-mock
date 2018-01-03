@@ -1,17 +1,10 @@
-const createOrUpdate = (notificationId, options, cb) => {
-  if (arguments.length === 1) {
-    // only options is specified
-    options = notificationId;
-    notificationId = undefined;
-  } else if (arguments.length === 2 && typeof notificationId === 'object') {
-    // options & cb are specified
-    options = notificationId;
-    cb = options;
-    notificationId = undefined;
-  }
-
+const create = (notificationId, options, cb) => {
   if (typeof notificationId !== 'string') {
     notificationId = 'generated-id';
+  }
+
+  if (typeof options === 'function') {
+    cb = options;
   }
 
   if (cb !== undefined) {
@@ -20,8 +13,15 @@ const createOrUpdate = (notificationId, options, cb) => {
 
   return Promise.resolve(notificationId);
 };
+const update = (notificationId, options, cb) => {
+  if (cb !== undefined) {
+    return cb(true);
+  }
+
+  return Promise.resolve(true);
+};
 
 export const notifications = {
-  create: jest.fn(createOrUpdate),
-  update: jest.fn(createOrUpdate),
+  create: jest.fn(create),
+  update: jest.fn(update),
 };
