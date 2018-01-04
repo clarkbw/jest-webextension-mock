@@ -99,4 +99,57 @@ describe('chrome.notifications', () => {
       'granted'
     );
   });
+
+  test('onClosed.addListener', () => {
+    expect(jest.isMockFunction(chrome.notifications.onClosed.addListener)).toBe(
+      true
+    );
+
+    chrome.notifications.onClosed.addListener(() => {});
+    expect(chrome.notifications.onClosed.addListener).toHaveBeenCalledTimes(1);
+  });
+
+  test('onClicked.addListener', () => {
+    expect(
+      jest.isMockFunction(chrome.notifications.onClicked.addListener)
+    ).toBe(true);
+
+    chrome.notifications.onClicked.addListener(() => {});
+    expect(chrome.notifications.onClicked.addListener).toHaveBeenCalledTimes(1);
+  });
+
+  test('onButtonClicked.addListener', () => {
+    expect(
+      jest.isMockFunction(chrome.notifications.onButtonClicked.addListener)
+    ).toBe(true);
+
+    chrome.notifications.onButtonClicked.addListener(() => {});
+    expect(
+      chrome.notifications.onButtonClicked.addListener
+    ).toHaveBeenCalledTimes(1);
+  });
+
+  test('onPermissionLevelChanged.addListener', () => {
+    expect(
+      jest.isMockFunction(
+        chrome.notifications.onPermissionLevelChanged.addListener
+      )
+    ).toBe(true);
+
+    chrome.notifications.onPermissionLevelChanged.addListener(() => {});
+    expect(
+      chrome.notifications.onPermissionLevelChanged.addListener
+    ).toHaveBeenCalledTimes(1);
+  });
+
+  test('onShowSettings.addListener', () => {
+    expect(
+      jest.isMockFunction(chrome.notifications.onShowSettings.addListener)
+    ).toBe(true);
+
+    chrome.notifications.onShowSettings.addListener(() => {});
+    expect(
+      chrome.notifications.onShowSettings.addListener
+    ).toHaveBeenCalledTimes(1);
+  });
 });
