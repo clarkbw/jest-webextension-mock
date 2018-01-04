@@ -1,3 +1,11 @@
+const cbOrPromise = (cb, value) => {
+  if (cb !== undefined) {
+    return cb(value);
+  }
+
+  return Promise.resolve(value);
+};
+
 const create = (notificationId, options, cb) => {
   if (typeof notificationId !== 'string') {
     notificationId = 'generated-id';
@@ -7,31 +15,11 @@ const create = (notificationId, options, cb) => {
     cb = options;
   }
 
-  if (cb !== undefined) {
-    return cb(notificationId);
-  }
-
-  return Promise.resolve(notificationId);
-};
-
-const update = (notificationId, options, cb) => {
-  if (cb !== undefined) {
-    return cb(true);
-  }
-
-  return Promise.resolve(true);
-};
-
-const clear = (notificationId, cb) => {
-  if (cb !== undefined) {
-    return cb(true);
-  }
-
-  return Promise.resolve(true);
+  return cbOrPromise(cb, notificationId);
 };
 
 export const notifications = {
   create: jest.fn(create),
-  update: jest.fn(update),
-  clear: jest.fn(clear),
+  update: jest.fn((notificationId, options, cb) => cbOrPromise(cb, true)),
+  clear: jest.fn((notificationId, cb) => cbOrPromise(cb, true)),
 };
