@@ -79,4 +79,24 @@ describe('chrome.notifications', () => {
   test('getAll - promise', () => {
     return expect(chrome.notifications.getAll()).resolves.toEqual([]);
   });
+
+  test('getPermissionLevel', done => {
+    const callback = jest.fn(() => done());
+
+    expect(jest.isMockFunction(chrome.notifications.getPermissionLevel)).toBe(
+      true
+    );
+    chrome.notifications.getPermissionLevel(callback);
+    expect(chrome.notifications.getPermissionLevel).toHaveBeenCalledTimes(1);
+    expect(chrome.notifications.getPermissionLevel).toHaveBeenLastCalledWith(
+      callback
+    );
+    expect(callback).toHaveBeenLastCalledWith('granted');
+  });
+
+  test('getPermissionLevel - promise', () => {
+    return expect(chrome.notifications.getPermissionLevel()).resolves.toEqual(
+      'granted'
+    );
+  });
 });
