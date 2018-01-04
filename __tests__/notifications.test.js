@@ -65,4 +65,18 @@ describe('chrome.notifications', () => {
   test('clear - promise', () => {
     return expect(chrome.notifications.clear('id')).resolves.toBe(true);
   });
+
+  test('getAll', done => {
+    const callback = jest.fn(() => done());
+
+    expect(jest.isMockFunction(chrome.notifications.getAll)).toBe(true);
+    chrome.notifications.getAll(callback);
+    expect(chrome.notifications.getAll).toHaveBeenCalledTimes(1);
+    expect(chrome.notifications.getAll).toHaveBeenLastCalledWith(callback);
+    expect(callback).toHaveBeenLastCalledWith([]);
+  });
+
+  test('getAll - promise', () => {
+    return expect(chrome.notifications.getAll()).resolves.toEqual([]);
+  });
 });
