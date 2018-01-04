@@ -51,4 +51,18 @@ describe('chrome.notifications', () => {
 
     return expect(chrome.notifications.update(options)).resolves.toBe(true);
   });
+
+  test('clear', done => {
+    const callback = jest.fn(() => done());
+
+    expect(jest.isMockFunction(chrome.notifications.clear)).toBe(true);
+    chrome.notifications.clear('id', callback);
+    expect(chrome.notifications.clear).toHaveBeenCalledTimes(1);
+    expect(chrome.notifications.clear).toHaveBeenLastCalledWith('id', callback);
+    expect(callback).toHaveBeenLastCalledWith(true);
+  });
+
+  test('clear - promise', () => {
+    return expect(chrome.notifications.clear('id')).resolves.toBe(true);
+  });
 });

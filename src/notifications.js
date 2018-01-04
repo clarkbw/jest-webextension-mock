@@ -13,7 +13,16 @@ const create = (notificationId, options, cb) => {
 
   return Promise.resolve(notificationId);
 };
+
 const update = (notificationId, options, cb) => {
+  if (cb !== undefined) {
+    return cb(true);
+  }
+
+  return Promise.resolve(true);
+};
+
+const clear = (notificationId, cb) => {
   if (cb !== undefined) {
     return cb(true);
   }
@@ -24,4 +33,5 @@ const update = (notificationId, options, cb) => {
 export const notifications = {
   create: jest.fn(create),
   update: jest.fn(update),
+  clear: jest.fn(clear),
 };
