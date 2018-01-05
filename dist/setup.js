@@ -277,6 +277,57 @@ var commands = {
   }
 };
 
+var cbOrPromise = function cbOrPromise(cb, value) {
+  if (cb !== undefined) {
+    return cb(value);
+  }
+
+  return Promise.resolve(value);
+};
+
+var create = function create(notificationId, options, cb) {
+  if (typeof notificationId !== 'string') {
+    notificationId = 'generated-id';
+  }
+
+  if (typeof options === 'function') {
+    cb = options;
+  }
+
+  return cbOrPromise(cb, notificationId);
+};
+
+var notifications = {
+  create: jest.fn(create),
+  update: jest.fn(function (notificationId, options, cb) {
+    return cbOrPromise(cb, true);
+  }),
+  clear: jest.fn(function (notificationId, cb) {
+    return cbOrPromise(cb, true);
+  }),
+  getAll: jest.fn(function (cb) {
+    return cbOrPromise(cb, []);
+  }),
+  getPermissionLevel: jest.fn(function (cb) {
+    return cbOrPromise(cb, 'granted');
+  }),
+  onClosed: {
+    addListener: jest.fn()
+  },
+  onClicked: {
+    addListener: jest.fn()
+  },
+  onButtonClicked: {
+    addListener: jest.fn()
+  },
+  onPermissionLevelChanged: {
+    addListener: jest.fn()
+  },
+  onShowSettings: {
+    addListener: jest.fn()
+  }
+};
+
 var geckoProfiler = {
   stop: jest.fn(function () {
     return Promise.resolve();
@@ -312,7 +363,8 @@ var chrome = {
   storage: storage,
   browserAction: browserAction,
   commands: commands,
-  geckoProfiler: geckoProfiler
+  geckoProfiler: geckoProfiler,
+  notifications: notifications
 };
 
  // Firefox uses 'browser' but aliases it to chrome
