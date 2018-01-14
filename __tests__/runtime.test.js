@@ -21,18 +21,22 @@ describe('browser.runtime', () => {
   test('sendMessage promise', () => {
     return expect(browser.runtime.sendMessage({})).resolves.toBeUndefined();
   });
-  test('onMessage.addListener', () => {
-    expect(jest.isMockFunction(browser.runtime.onMessage.addListener)).toBe(
-      true
-    );
-    browser.runtime.onMessage.addListener();
-    expect(browser.runtime.onMessage.addListener).toHaveBeenCalledTimes(1);
+  ['addListener', 'removeListener', 'hasListener'].forEach(method => {
+    test(`onMessage.${method}`, () => {
+      const callback = jest.fn();
+      expect(jest.isMockFunction(browser.runtime.onMessage[method])).toBe(true);
+      browser.runtime.onMessage[method](callback);
+      expect(browser.runtime.onMessage[method]).toHaveBeenCalledTimes(1);
+      expect(callback).toHaveBeenCalledTimes(0);
+    });
   });
-  test('onConnect.addListener', () => {
-    expect(jest.isMockFunction(browser.runtime.onConnect.addListener)).toBe(
-      true
-    );
-    browser.runtime.onConnect.addListener(() => {});
-    expect(browser.runtime.onConnect.addListener).toHaveBeenCalledTimes(1);
+  ['addListener', 'removeListener', 'hasListener'].forEach(method => {
+    test(`onConnect.${method}`, () => {
+      const callback = jest.fn();
+      expect(jest.isMockFunction(browser.runtime.onConnect[method])).toBe(true);
+      browser.runtime.onConnect[method](callback);
+      expect(browser.runtime.onConnect[method]).toHaveBeenCalledTimes(1);
+      expect(callback).toHaveBeenCalledTimes(0);
+    });
   });
 });

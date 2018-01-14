@@ -20,8 +20,12 @@ export const runtime = {
   }),
   onMessage: {
     addListener: jest.fn(),
+    removeListener: jest.fn(),
+    hasListener: jest.fn(),
   },
   onConnect: {
     addListener: jest.fn(),
+    removeListener: jest.fn(),
+    hasListener: jest.fn(),
   },
 };
