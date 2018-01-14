@@ -116,5 +116,7 @@ export const storage = {
   },
   onChanged: {
     addListener: jest.fn(),
+    removeListener: jest.fn(),
+    hasListener: jest.fn(),
   },
 };

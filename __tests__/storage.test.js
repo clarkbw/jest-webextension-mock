@@ -1,12 +1,12 @@
 describe('browser.storage', () => {
-  test('onChanged.addListener', () => {
-    const callback = jest.fn();
-    expect(jest.isMockFunction(browser.storage.onChanged.addListener)).toBe(
-      true
-    );
-    browser.storage.onChanged.addListener(callback);
-    expect(browser.storage.onChanged.addListener).toHaveBeenCalledTimes(1);
-    expect(callback).toHaveBeenCalledTimes(0);
+  ['addListener', 'removeListener', 'hasListener'].forEach(method => {
+    test(`onChanged.${method}`, () => {
+      const callback = jest.fn();
+      expect(jest.isMockFunction(browser.storage.onChanged[method])).toBe(true);
+      browser.storage.onChanged[method](callback);
+      expect(browser.storage.onChanged[method]).toHaveBeenCalledTimes(1);
+      expect(callback).toHaveBeenCalledTimes(0);
+    });
   });
 });
 
