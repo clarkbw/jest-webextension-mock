@@ -106,10 +106,14 @@ var runtime = {
     return Promise.resolve();
   }),
   onMessage: {
-    addListener: jest.fn()
+    addListener: jest.fn(),
+    removeListener: jest.fn(),
+    hasListener: jest.fn()
   },
   onConnect: {
-    addListener: jest.fn()
+    addListener: jest.fn(),
+    removeListener: jest.fn(),
+    hasListener: jest.fn()
   }
 };
 
@@ -236,7 +240,9 @@ var storage = {
     })
   },
   onChanged: {
-    addListener: jest.fn()
+    addListener: jest.fn(),
+    removeListener: jest.fn(),
+    hasListener: jest.fn()
   }
 };
 
