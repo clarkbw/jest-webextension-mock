@@ -21,7 +21,7 @@ describe('browser.storage', () => {
           storage.get(key, result => {
             expect(result).toBeDefined();
             expect(typeof result === 'object').toBeTruthy();
-            expect(result).toHaveProperty(key, '');
+            expect(result).toHaveProperty(key, undefined);
             done();
           });
         });
@@ -31,7 +31,7 @@ describe('browser.storage', () => {
             expect(result).toBeDefined();
             expect(typeof result === 'object').toBeTruthy();
             keys.forEach(k => {
-              expect(result).toHaveProperty(k);
+              expect(result).toHaveProperty(k, undefined);
             });
             done();
           });
@@ -63,7 +63,7 @@ describe('browser.storage', () => {
       });
       test('get promise', () => {
         const key = 'key';
-        return expect(storage.get(key)).resolves.toEqual({ key: '' });
+        return expect(storage.get(key)).resolves.toEqual({ key: undefined });
       });
       test('getBytesInUse', done => {
         const callback = jest.fn(() => done());
@@ -78,7 +78,7 @@ describe('browser.storage', () => {
       test('set', done => {
         const callback = jest.fn(() => done());
         expect(jest.isMockFunction(storage.set)).toBe(true);
-        storage.set({ key: '' }, callback);
+        storage.set({ key: 'foo' }, callback);
         expect(storage.set).toHaveBeenCalledTimes(1);
         expect(callback).toBeCalled();
       });
