@@ -1,4 +1,4 @@
-const store = {};
+let store = {};
 
 function resolveKey(key) {
   if (typeof key === 'string') {
@@ -34,19 +34,23 @@ export const storage = {
       }
       return Promise.resolve(0);
     }),
-    set: jest.fn((id, cb) => {
+    set: jest.fn((payload, cb) => {
+      Object.keys(payload).forEach(key => (store[key] = payload[key]));
       if (cb !== undefined) {
         return cb();
       }
       return Promise.resolve();
     }),
     remove: jest.fn((id, cb) => {
+      const keys = typeof id === 'string' ? [id] : id;
+      keys.forEach(key => delete store[key]);
       if (cb !== undefined) {
         return cb();
       }
       return Promise.resolve();
     }),
     clear: jest.fn(cb => {
+      store = {};
       if (cb !== undefined) {
         return cb();
       }
@@ -67,19 +71,23 @@ export const storage = {
       }
       return Promise.resolve(0);
     }),
-    set: jest.fn((id, cb) => {
+    set: jest.fn((payload, cb) => {
+      Object.keys(payload).forEach(key => (store[key] = payload[key]));
       if (cb !== undefined) {
         return cb();
       }
       return Promise.resolve();
     }),
     remove: jest.fn((id, cb) => {
+      const keys = typeof id === 'string' ? [id] : id;
+      keys.forEach(key => delete store[key]);
       if (cb !== undefined) {
         return cb();
       }
       return Promise.resolve();
     }),
     clear: jest.fn(cb => {
+      store = {};
       if (cb !== undefined) {
         return cb();
       }
@@ -100,19 +108,23 @@ export const storage = {
       }
       return Promise.resolve(0);
     }),
-    set: jest.fn((id, cb) => {
+    set: jest.fn((payload, cb) => {
+      Object.keys(payload).forEach(key => (store[key] = payload[key]));
       if (cb !== undefined) {
         return cb();
       }
       return Promise.resolve();
     }),
     remove: jest.fn((id, cb) => {
+      const keys = typeof id === 'string' ? [id] : id;
+      keys.forEach(key => delete store[key]);
       if (cb !== undefined) {
         return cb();
       }
       return Promise.resolve();
     }),
     clear: jest.fn(cb => {
+      store = {};
       if (cb !== undefined) {
         return cb();
       }
