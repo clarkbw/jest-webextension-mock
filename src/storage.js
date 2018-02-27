@@ -1,15 +1,20 @@
+const store = {};
+
 function resolveKey(key) {
   if (typeof key === 'string') {
     const result = {};
-    result[key] = '';
+    result[key] = store[key];
     return result;
   } else if (Array.isArray(key)) {
     return key.reduce((acc, curr) => {
-      acc[curr] = '';
+      acc[curr] = store[curr];
       return acc;
     }, {});
   } else if (typeof key === 'object') {
-    return key;
+    return Object.keys(key).reduce((acc, curr) => {
+      acc[curr] = store[curr] || key[curr];
+      return acc;
+    }, {});
   }
   throw new Error('Wrong key given');
 }
