@@ -51,7 +51,6 @@ describe('browser.storage', () => {
         test('a invalid key', () => {
           try {
             storage.get(1, jest.fn());
-            expect.toThrow;
           } catch (e) {
             expect(e.message).toBe('Wrong key given');
           }
