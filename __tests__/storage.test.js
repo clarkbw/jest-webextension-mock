@@ -108,6 +108,41 @@ describe('browser.storage', () => {
       test('clear promise', () => {
         return expect(storage.clear()).resolves.toBeUndefined();
       });
+      test('real scenario', done => {
+        expect(jest.isMockFunction(storage.get)).toBe(true);
+        expect(jest.isMockFunction(storage.set)).toBe(true);
+        expect(jest.isMockFunction(storage.remove)).toBe(true);
+        expect(jest.isMockFunction(storage.clear)).toBe(true);
+        // set keys
+        storage.set({ key: 'value', foo: 'bar', foo2: 'bar2' }, () => {
+          // get 'key'
+          storage.get(['key'], result => {
+            expect(result).toBeDefined();
+            expect(typeof result === 'object').toBeTruthy();
+            expect(result).toHaveProperty('key', 'value');
+            expect(result).not.toHaveProperty('foo');
+            expect(result).not.toHaveProperty('foo2');
+            // remove 'key'
+            storage.remove('key', () => {
+              // get all values
+              storage.get(null, result => {
+                expect(result).toHaveProperty('key', undefined);
+                expect(result).toHaveProperty('foo', 'bar');
+                expect(result).toHaveProperty('foo2', 'bar2');
+                // clear values
+                storage.clear(() => {
+                  storage.get(['key', 'foo', 'foo2'], result => {
+                    expect(result).toHaveProperty('key', undefined);
+                    expect(result).toHaveProperty('foo', undefined);
+                    expect(result).toHaveProperty('foo2', undefined);
+                    done();
+                  });
+                });
+              });
+            });
+          });
+        });
+      });
     });
   });
 });
