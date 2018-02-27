@@ -57,7 +57,11 @@ describe('browser.storage', () => {
         });
         afterEach(() => {
           expect(storage.get).toHaveBeenCalledTimes(1);
+          storage.clear();
           storage.get.mockClear();
+          storage.set.mockClear();
+          storage.remove.mockClear();
+          storage.clear.mockClear();
         });
       });
       test('get promise', () => {
