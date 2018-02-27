@@ -92,7 +92,7 @@ describe('browser.storage', () => {
         expect(callback).toBeCalled();
       });
       test('remove promise', () => {
-        return expect(storage.remove(1)).resolves.toBeUndefined();
+        return expect(storage.remove(['foo', 'bar'])).resolves.toBeUndefined();
       });
       test('clear', done => {
         const callback = jest.fn(() => done());
