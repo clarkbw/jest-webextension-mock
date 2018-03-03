@@ -123,18 +123,23 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
   return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
 };
 
+var store = {};
+
 function resolveKey(key) {
   if (typeof key === 'string') {
     var result = {};
-    result[key] = '';
+    result[key] = store[key];
     return result;
   } else if (Array.isArray(key)) {
     return key.reduce(function (acc, curr) {
-      acc[curr] = '';
+      acc[curr] = store[curr];
       return acc;
     }, {});
   } else if ((typeof key === 'undefined' ? 'undefined' : _typeof(key)) === 'object') {
-    return key;
+    return Object.keys(key).reduce(function (acc, curr) {
+      acc[curr] = store[curr] || key[curr];
+      return acc;
+    }, {});
   }
   throw new Error('Wrong key given');
 }
@@ -142,7 +147,7 @@ function resolveKey(key) {
 var storage = {
   sync: {
     get: jest.fn(function (id, cb) {
-      var result = resolveKey(id);
+      var result = id === null ? store : resolveKey(id);
       if (cb !== undefined) {
         return cb(result);
       }
@@ -154,19 +159,27 @@ var storage = {
       }
       return Promise.resolve(0);
     }),
-    set: jest.fn(function (id, cb) {
+    set: jest.fn(function (payload, cb) {
+      Object.keys(payload).forEach(function (key) {
+        return store[key] = payload[key];
+      });
       if (cb !== undefined) {
         return cb();
       }
       return Promise.resolve();
     }),
     remove: jest.fn(function (id, cb) {
+      var keys = typeof id === 'string' ? [id] : id;
+      keys.forEach(function (key) {
+        return delete store[key];
+      });
       if (cb !== undefined) {
         return cb();
       }
       return Promise.resolve();
     }),
     clear: jest.fn(function (cb) {
+      store = {};
       if (cb !== undefined) {
         return cb();
       }
@@ -175,7 +188,7 @@ var storage = {
   },
   local: {
     get: jest.fn(function (id, cb) {
-      var result = resolveKey(id);
+      var result = id === null ? store : resolveKey(id);
       if (cb !== undefined) {
         return cb(result);
       }
@@ -187,19 +200,27 @@ var storage = {
       }
       return Promise.resolve(0);
     }),
-    set: jest.fn(function (id, cb) {
+    set: jest.fn(function (payload, cb) {
+      Object.keys(payload).forEach(function (key) {
+        return store[key] = payload[key];
+      });
       if (cb !== undefined) {
         return cb();
       }
       return Promise.resolve();
     }),
     remove: jest.fn(function (id, cb) {
+      var keys = typeof id === 'string' ? [id] : id;
+      keys.forEach(function (key) {
+        return delete store[key];
+      });
       if (cb !== undefined) {
         return cb();
       }
       return Promise.resolve();
     }),
     clear: jest.fn(function (cb) {
+      store = {};
       if (cb !== undefined) {
         return cb();
       }
@@ -208,7 +229,7 @@ var storage = {
   },
   managed: {
     get: jest.fn(function (id, cb) {
-      var result = resolveKey(id);
+      var result = id === null ? store : resolveKey(id);
       if (cb !== undefined) {
         return cb(result);
       }
@@ -220,19 +241,27 @@ var storage = {
       }
       return Promise.resolve(0);
     }),
-    set: jest.fn(function (id, cb) {
+    set: jest.fn(function (payload, cb) {
+      Object.keys(payload).forEach(function (key) {
+        return store[key] = payload[key];
+      });
       if (cb !== undefined) {
         return cb();
       }
       return Promise.resolve();
     }),
     remove: jest.fn(function (id, cb) {
+      var keys = typeof id === 'string' ? [id] : id;
+      keys.forEach(function (key) {
+        return delete store[key];
+      });
       if (cb !== undefined) {
         return cb();
       }
       return Promise.resolve();
     }),
     clear: jest.fn(function (cb) {
+      store = {};
       if (cb !== undefined) {
         return cb();
       }
@@ -361,7 +390,6 @@ var geckoProfiler = {
   }
 };
 
-// Firefox specific API
 var chrome = {
   omnibox: omnibox,
   tabs: tabs,
@@ -372,7 +400,6 @@ var chrome = {
   geckoProfiler: geckoProfiler,
   notifications: notifications
 };
-
  // Firefox uses 'browser' but aliases it to chrome
 
 /**
@@ -380,6 +407,7 @@ var chrome = {
  * from the package.json file.  This allows developers to
  * directly call the module in their `setupFiles` property.
  */
+
 global.chrome = chrome;
 global.browser = chrome;
 
