@@ -363,6 +363,17 @@ var notifications = {
   }
 };
 
+var i18n = {
+  getAcceptLanguages: jest.fn(),
+  getMessage: jest.fn(function (key) {
+    return 'Translated<' + key + '>';
+  }),
+  getUILanguage: jest.fn(function () {
+    return 'en';
+  }),
+  detectLanguage: jest.fn()
+};
+
 var geckoProfiler = {
   stop: jest.fn(function () {
     return Promise.resolve();
@@ -398,7 +409,8 @@ var chrome = {
   browserAction: browserAction,
   commands: commands,
   geckoProfiler: geckoProfiler,
-  notifications: notifications
+  notifications: notifications,
+  i18n: i18n
 };
  // Firefox uses 'browser' but aliases it to chrome
 
