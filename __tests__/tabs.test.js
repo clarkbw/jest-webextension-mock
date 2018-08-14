@@ -16,7 +16,10 @@ describe('browser.tabs', () => {
   test('connect', () => {
     const name = 'CONNECT_NAME';
     expect(jest.isMockFunction(chrome.tabs.connect)).toBe(true);
-    const connection = chrome.tabs.connect(1, { name });
+    const connection = chrome.tabs.connect(
+      1,
+      { name }
+    );
     expect(connection.name).toEqual(name);
     expect(jest.isMockFunction(connection.disconnect)).toBe(true);
     expect(jest.isMockFunction(connection.postMessage)).toBe(true);
