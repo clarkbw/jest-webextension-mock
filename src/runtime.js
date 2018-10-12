@@ -28,4 +28,7 @@ export const runtime = {
     removeListener: jest.fn(),
     hasListener: jest.fn(),
   },
+  getURL: jest.fn(function(path) {
+    return path;
+  }),
 };
