@@ -38,4 +38,5 @@ export const tabs = {
     removeListener: jest.fn(),
     hasListener: jest.fn(),
   },
+  sendMessage: jest.fn(),
 };
