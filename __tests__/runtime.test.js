@@ -39,4 +39,15 @@ describe('browser.runtime', () => {
       expect(callback).toHaveBeenCalledTimes(0);
     });
   });
+  ['addListener', 'removeListener', 'hasListener'].forEach(method => {
+    test(`onInstalled.${method}`, () => {
+      const callback = jest.fn();
+      expect(jest.isMockFunction(browser.runtime.onInstalled[method])).toBe(
+        true
+      );
+      browser.runtime.onInstalled[method](callback);
+      expect(browser.runtime.onInstalled[method]).toHaveBeenCalledTimes(1);
+      expect(callback).toHaveBeenCalledTimes(0);
+    });
+  });
 });

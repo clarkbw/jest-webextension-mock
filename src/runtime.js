@@ -28,4 +28,9 @@ export const runtime = {
     removeListener: jest.fn(),
     hasListener: jest.fn(),
   },
+  onInstalled: {
+    addListener: jest.fn(),
+    removeListener: jest.fn(),
+    hasListener: jest.fn(),
+  },
 };

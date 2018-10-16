@@ -33,4 +33,9 @@ export const tabs = {
   move: jest.fn((ids = [], props = {}, cb = () => {}) =>
     cb(ids.map(id => Object.assign({}, props, { id })))
   ),
+  onUpdated: {
+    addListener: jest.fn(),
+    removeListener: jest.fn(),
+    hasListener: jest.fn(),
+  },
 };

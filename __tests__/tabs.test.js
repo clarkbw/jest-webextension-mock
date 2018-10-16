@@ -87,4 +87,13 @@ describe('browser.tabs', () => {
       { id: 3, pinned: true },
     ]);
   });
+  ['addListener', 'removeListener', 'hasListener'].forEach(method => {
+    test(`onUpdated.${method}`, () => {
+      const callback = jest.fn();
+      expect(jest.isMockFunction(browser.tabs.onUpdated[method])).toBe(true);
+      browser.tabs.onUpdated[method](callback);
+      expect(browser.tabs.onUpdated[method]).toHaveBeenCalledTimes(1);
+      expect(callback).toHaveBeenCalledTimes(0);
+    });
+  });
 });
