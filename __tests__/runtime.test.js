@@ -9,6 +9,13 @@ describe('browser.runtime', () => {
     expect(jest.isMockFunction(connection.onMessage.addListener)).toBe(true);
     expect(browser.runtime.connect).toHaveBeenCalledTimes(1);
   });
+  test('getURL', () => {
+    const path = 'TEST_PATH';
+    expect(jest.isMockFunction(browser.runtime.getURL)).toBe(true);
+    const respPath = browser.runtime.getURL(path);
+    expect(respPath).toEqual(path);
+    expect(browser.runtime.getURL).toHaveBeenCalledTimes(1);
+  });
   test('sendMessage', done => {
     const callback = jest.fn(() => done());
     expect(jest.isMockFunction(browser.runtime.sendMessage)).toBe(true);
