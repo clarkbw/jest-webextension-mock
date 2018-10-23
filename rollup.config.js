@@ -8,8 +8,7 @@ export default {
     babel({
       exclude: 'node_modules/**',
       babelrc: false,
-      presets: [['env', { modules: false }]],
-      plugins: ['external-helpers'],
+      presets: [['@babel/preset-env', { modules: false }]],
     }),
   ],
   output: {
