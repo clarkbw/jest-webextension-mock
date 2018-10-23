@@ -1,4 +1,4 @@
-let listeners = [];
+let onMessageListeners = [];
 export const runtime = {
   connect: jest.fn(function({ name }) {
     const connection = {
@@ -9,14 +9,14 @@ export const runtime = {
       },
       onMessage: {
         addListener: jest.fn(listener => {
-          listeners.push(listener);
+          onMessageListeners.push(listener);
         }),
       },
     };
     return connection;
   }),
   sendMessage: jest.fn((message, cb) => {
-    listeners.forEach(listener => listener(message));
+    onMessageListeners.forEach(listener => listener(message));
     if (cb !== undefined) {
       return cb();
     }
@@ -24,10 +24,12 @@ export const runtime = {
   }),
   onMessage: {
     addListener: jest.fn(listener => {
-      listeners.push(listener);
+      onMessageListeners.push(listener);
     }),
-    removeListener: jest.fn(),
-    hasListener: jest.fn(),
+    removeListener: jest.fn(listener => {
+      onMessageListeners = onMessageListeners.filter(lstn => lstn !== listener);
+    }),
+    hasListener: jest.fn(listener => onMessageListeners.includes(listener)),
   },
   onConnect: {
     addListener: jest.fn(),

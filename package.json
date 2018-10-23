@@ -1,39 +1,44 @@
 {
-  "name": "jest-webextension-mock",
-  "version": "3.3.0",
-  "description": "Mock the components of a WebExtension",
-  "main": "dist/setup.js",
-  "module": "src/setup.js",
-  "author": "Bryan Clark <clarkbw@gmail.com> (https://twitter.com/clarkbw)",
-  "license": "ISC",
-  "scripts": {
-    "test": "jest",
-    "build": "rollup -c",
-    "prettier": "prettier --single-quote --trailing-comma es5 --write \"{config,src,__{tests,setups}__}/**/*.js\" rollup.config.js",
-    "eslint-check": "eslint --print-config .eslintrc.js | eslint-config-prettier-check"
-  },
-  "devDependencies": {
-    "@babel/core": "^7.0.0",
-    "@babel/preset-env": "^7.0.0",
-    "babel-core": "^7.0.0-bridge.0",
-    "babel-jest": "^23.0.0",
-    "eslint": "^5.3.0",
-    "eslint-config-prettier": "^3.0.1",
-    "eslint-plugin-prettier": "^3.0.0",
-    "jest": "^23.5.0",
-    "prettier": "^1.14.2",
-    "rollup": "^0.66.0",
-    "rollup-plugin-babel": "^4.0.1",
-    "rollup-plugin-node-resolve": "^3.3.0",
-    "rollup-watch": "^4.0.0"
-  },
-  "jest": {
-    "bail": true,
-    "coverageDirectory": "./coverage/",
-    "coverageReporters": ["json", "lcov", "text", "html"],
-    "collectCoverage": true,
-    "setupFiles": [
-      "./__setups__/chrome.js"
-    ]
-  }
+    "name": "jest-webextension-mock",
+    "version": "3.3.0",
+    "description": "Mock the components of a WebExtension",
+    "main": "dist/setup.js",
+    "module": "src/setup.js",
+    "author": "Bryan Clark <clarkbw@gmail.com> (https://twitter.com/clarkbw)",
+    "license": "ISC",
+    "scripts": {
+        "test": "jest",
+        "build": "rollup -c",
+        "prettier": "prettier --write \"{config,src,__{tests,setups}__}/**/*.js\" rollup.config.js",
+        "eslint-check": "eslint --print-config .eslintrc.js | eslint-config-prettier-check"
+    },
+    "devDependencies": {
+        "@babel/core": "^7.0.0",
+        "@babel/preset-env": "^7.0.0",
+        "babel-core": "^7.0.0-bridge.0",
+        "babel-jest": "^23.0.0",
+        "eslint": "^5.3.0",
+        "eslint-config-prettier": "^3.1.0",
+        "eslint-plugin-prettier": "^3.0.0",
+        "jest": "^23.5.0",
+        "prettier": "^1.14.2",
+        "rollup": "^0.66.0",
+        "rollup-plugin-babel": "^4.0.1",
+        "rollup-plugin-node-resolve": "^3.3.0",
+        "rollup-watch": "^4.0.0"
+    },
+    "jest": {
+        "bail": true,
+        "coverageDirectory": "./coverage/",
+        "coverageReporters": [
+            "json",
+            "lcov",
+            "text",
+            "html"
+        ],
+        "collectCoverage": true,
+        "setupFiles": [
+            "./__setups__/chrome.js"
+        ]
+    }
 }
