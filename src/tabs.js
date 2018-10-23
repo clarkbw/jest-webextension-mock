@@ -24,6 +24,12 @@ export const tabs = {
     }
     return Promise.resolve(props);
   }),
+  remove: jest.fn((tabIds, cb) => {
+    if (cb !== undefined) {
+      return cb();
+    }
+    return Promise.resolve();
+  }),
   duplicate: jest.fn((id = '', cb = () => {}) => cb(Object.assign({}, { id }))),
   query: jest.fn((query = '', cb = () => {}) => cb([{}])),
   highlight: jest.fn((info = {}, cb = () => {}) => cb()),

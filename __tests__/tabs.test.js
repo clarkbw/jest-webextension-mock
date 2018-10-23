@@ -48,6 +48,16 @@ describe('browser.tabs', () => {
     expect(callback).toHaveBeenCalledTimes(1);
     expect(callback).toHaveBeenCalledWith({ id: 1 });
   });
+  test('remove', done => {
+    const callback = jest.fn(() => done());
+    expect(jest.isMockFunction(chrome.tabs.remove)).toBe(true);
+    chrome.tabs.remove([1], callback);
+    expect(chrome.tabs.remove).toHaveBeenCalledTimes(1);
+    expect(callback).toHaveBeenCalledTimes(1);
+  });
+  test('remove promise', () => {
+    expect(chrome.tabs.remove([1])).resolves.toBeUndefined();
+  });
   test('query', done => {
     const callback = jest.fn(() => done());
     expect(jest.isMockFunction(chrome.tabs.query)).toBe(true);

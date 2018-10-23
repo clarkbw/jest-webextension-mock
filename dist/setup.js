@@ -52,6 +52,13 @@ var tabs = {
 
     return Promise.resolve(props);
   }),
+  remove: jest.fn(function (tabIds, cb) {
+    if (cb !== undefined) {
+      return cb(props);
+    }
+
+    return Promise.resolve();
+  }),
   duplicate: jest.fn(function () {
     var id = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
     var cb = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : function () {};
@@ -89,9 +96,11 @@ var tabs = {
     addListener: jest.fn(),
     removeListener: jest.fn(),
     hasListener: jest.fn()
-  }
+  },
+  sendMessage: jest.fn()
 };
 
+var listeners = [];
 var runtime = {
   connect: jest.fn(function (_ref) {
     var name = _ref.name;
@@ -102,12 +111,18 @@ var runtime = {
         addListener: jest.fn()
       },
       onMessage: {
-        addListener: jest.fn()
+        addListener: jest.fn(function (listener) {
+          listeners.push(listener);
+        })
       }
     };
     return connection;
   }),
   sendMessage: jest.fn(function (message, cb) {
+    listeners.forEach(function (listener) {
+      return listener(message);
+    });
+
     if (cb !== undefined) {
       return cb();
     }
@@ -115,7 +130,9 @@ var runtime = {
     return Promise.resolve();
   }),
   onMessage: {
-    addListener: jest.fn(),
+    addListener: jest.fn(function (listener) {
+      listeners.push(listener);
+    }),
     removeListener: jest.fn(),
     hasListener: jest.fn()
   },
@@ -128,7 +145,10 @@ var runtime = {
     addListener: jest.fn(),
     removeListener: jest.fn(),
     hasListener: jest.fn()
-  }
+  },
+  getURL: jest.fn(function (path) {
+    return path;
+  })
 };
 
 function _typeof(obj) {

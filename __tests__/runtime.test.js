@@ -1,3 +1,8 @@
+beforeEach(() => {
+  browser.runtime.sendMessage.mockClear();
+  browser.runtime.onMessage.addListener.mockClear();
+});
+
 describe('browser.runtime', () => {
   test('connect', () => {
     const name = 'CONNECT_NAME';
@@ -8,6 +13,13 @@ describe('browser.runtime', () => {
     expect(jest.isMockFunction(connection.onDisconnect.addListener)).toBe(true);
     expect(jest.isMockFunction(connection.onMessage.addListener)).toBe(true);
     expect(browser.runtime.connect).toHaveBeenCalledTimes(1);
+  });
+  test('connect.onMessage listener', done => {
+    const name = 'CONNECT_NAME';
+    const listener = jest.fn();
+    browser.runtime.connect(name).onMessage.addListener(listener);
+    browser.runtime.sendMessage({ test: 'message' }, done);
+    expect(listener).toHaveBeenCalledWith({ test: 'message' });
   });
   test('getURL', () => {
     const path = 'TEST_PATH';
@@ -24,6 +36,12 @@ describe('browser.runtime', () => {
     expect(callback).toHaveBeenCalledTimes(1);
     browser.runtime.sendMessage({ test: 'message' });
     expect(browser.runtime.sendMessage).toHaveBeenCalledTimes(2);
+  });
+  test('sendMessage listener', done => {
+    const listener = jest.fn();
+    browser.runtime.onMessage.addListener(listener);
+    browser.runtime.sendMessage({ test: 'message' }, done);
+    expect(listener).toHaveBeenCalledWith({ test: 'message' });
   });
   test('sendMessage promise', () => {
     return expect(browser.runtime.sendMessage({})).resolves.toBeUndefined();

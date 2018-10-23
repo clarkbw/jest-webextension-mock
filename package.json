@@ -30,6 +30,7 @@
   "jest": {
     "bail": true,
     "coverageDirectory": "./coverage/",
+    "coverageReporters": ["json", "lcov", "text", "html"],
     "collectCoverage": true,
     "setupFiles": [
       "./__setups__/chrome.js"
