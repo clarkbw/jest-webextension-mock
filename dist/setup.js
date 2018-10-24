@@ -54,7 +54,7 @@ var tabs = {
   }),
   remove: jest.fn(function (tabIds, cb) {
     if (cb !== undefined) {
-      return cb(props);
+      return cb();
     }
 
     return Promise.resolve();
@@ -100,7 +100,7 @@ var tabs = {
   sendMessage: jest.fn()
 };
 
-var listeners = [];
+var onMessageListeners = [];
 var runtime = {
   connect: jest.fn(function (_ref) {
     var name = _ref.name;
@@ -112,14 +112,14 @@ var runtime = {
       },
       onMessage: {
         addListener: jest.fn(function (listener) {
-          listeners.push(listener);
+          onMessageListeners.push(listener);
         })
       }
     };
     return connection;
   }),
   sendMessage: jest.fn(function (message, cb) {
-    listeners.forEach(function (listener) {
+    onMessageListeners.forEach(function (listener) {
       return listener(message);
     });
 
@@ -131,10 +131,16 @@ var runtime = {
   }),
   onMessage: {
     addListener: jest.fn(function (listener) {
-      listeners.push(listener);
+      onMessageListeners.push(listener);
     }),
-    removeListener: jest.fn(),
-    hasListener: jest.fn()
+    removeListener: jest.fn(function (listener) {
+      onMessageListeners = onMessageListeners.filter(function (lstn) {
+        return lstn !== listener;
+      });
+    }),
+    hasListener: jest.fn(function (listener) {
+      return onMessageListeners.includes(listener);
+    })
   },
   onConnect: {
     addListener: jest.fn(),
