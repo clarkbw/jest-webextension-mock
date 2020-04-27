@@ -104,7 +104,7 @@ var onMessageListeners = [];
 var runtime = {
   connect: jest.fn(function (_ref) {
     var name = _ref.name;
-    var connection = {
+    return {
       name: name,
       postMessage: jest.fn(),
       onDisconnect: {
@@ -114,9 +114,9 @@ var runtime = {
         addListener: jest.fn(function (listener) {
           onMessageListeners.push(listener);
         })
-      }
+      },
+      disconnect: jest.fn()
     };
-    return connection;
   }),
   sendMessage: jest.fn(function (message, cb) {
     onMessageListeners.forEach(function (listener) {
@@ -154,10 +154,13 @@ var runtime = {
   },
   getURL: jest.fn(function (path) {
     return path;
-  })
+  }),
+  openOptionsPage: jest.fn()
 };
 
 function _typeof(obj) {
+  "@babel/helpers - typeof";
+
   if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
     _typeof = function (obj) {
       return typeof obj;
@@ -452,6 +455,15 @@ var i18n = {
   detectLanguage: jest.fn()
 };
 
+var webNavigation = {
+  onCompleted: {
+    addListener: jest.fn()
+  },
+  onHistoryStateUpdated: {
+    addListener: jest.fn()
+  }
+};
+
 var geckoProfiler = {
   stop: jest.fn(function () {
     return Promise.resolve();
@@ -488,7 +500,8 @@ var chrome = {
   commands: commands,
   geckoProfiler: geckoProfiler,
   notifications: notifications,
-  i18n: i18n
+  i18n: i18n,
+  webNavigation: webNavigation
 };
  // Firefox uses 'browser' but aliases it to chrome
 

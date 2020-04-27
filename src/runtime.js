@@ -1,7 +1,7 @@
 let onMessageListeners = [];
 export const runtime = {
   connect: jest.fn(function({ name }) {
-    const connection = {
+    return {
       name,
       postMessage: jest.fn(),
       onDisconnect: {
@@ -12,8 +12,8 @@ export const runtime = {
           onMessageListeners.push(listener);
         }),
       },
+      disconnect: jest.fn(),
     };
-    return connection;
   }),
   sendMessage: jest.fn((message, cb) => {
     onMessageListeners.forEach(listener => listener(message));
@@ -44,4 +44,5 @@ export const runtime = {
   getURL: jest.fn(function(path) {
     return path;
   }),
+  openOptionsPage: jest.fn(),
 };

@@ -14,6 +14,7 @@ describe('browser.runtime', () => {
     expect(jest.isMockFunction(connection.postMessage)).toBe(true);
     expect(jest.isMockFunction(connection.onDisconnect.addListener)).toBe(true);
     expect(jest.isMockFunction(connection.onMessage.addListener)).toBe(true);
+    expect(jest.isMockFunction(connection.disconnect)).toBe(true);
     expect(browser.runtime.connect).toHaveBeenCalledTimes(1);
   });
   test('connect.onMessage listener', done => {
@@ -97,5 +98,10 @@ describe('browser.runtime', () => {
       expect(browser.runtime.onInstalled[method]).toHaveBeenCalledTimes(1);
       expect(callback).toHaveBeenCalledTimes(0);
     });
+  });
+  test('openOptionsPage', () => {
+    expect(jest.isMockFunction(browser.runtime.openOptionsPage)).toBe(true);
+    browser.runtime.openOptionsPage();
+    expect(browser.runtime.openOptionsPage).toHaveBeenCalledTimes(1);
   });
 });
