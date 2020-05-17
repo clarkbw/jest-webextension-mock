@@ -45,4 +45,5 @@ export const tabs = {
     hasListener: jest.fn(),
   },
   sendMessage: jest.fn(),
+  reload: jest.fn((tabId, reloadProperties, cb) => cb()),
 };
