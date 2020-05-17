@@ -103,4 +103,13 @@ describe('browser.tabs', () => {
       expect(callback).toHaveBeenCalledTimes(0);
     });
   });
+  test('reload', (done) => {
+    const callback = jest.fn(() => done());
+    expect(jest.isMockFunction(chrome.tabs.reload)).toBe(true);
+
+    chrome.tabs.reload(1, {}, callback);
+
+    expect(chrome.tabs.reload).toHaveBeenCalledTimes(1);
+    expect(callback).toHaveBeenCalledTimes(1);
+  });
 });
