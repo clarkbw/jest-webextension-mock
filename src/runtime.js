@@ -1,4 +1,4 @@
-let onMessageListeners = [];
+export let onMessageListeners = [];
 export const runtime = {
   connect: jest.fn(function ({ name }) {
     return {
