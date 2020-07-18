@@ -1,4 +1,5 @@
 // https://developer.chrome.com/extensions/tabs
+import { onMessageListeners } from './runtime';
 
 export const tabs = {
   get: jest.fn((id = '', cb = () => {}) => cb({})),
@@ -44,6 +45,12 @@ export const tabs = {
     removeListener: jest.fn(),
     hasListener: jest.fn(),
   },
-  sendMessage: jest.fn(),
+  sendMessage: jest.fn((tabId, message, cb) => {
+    onMessageListeners.forEach((listener) => listener(tabId, message));
+    if (cb !== undefined) {
+      return cb();
+    }
+    return Promise.resolve();
+  }),
   reload: jest.fn((tabId, reloadProperties, cb) => cb()),
 };

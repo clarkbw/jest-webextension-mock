@@ -112,4 +112,22 @@ describe('browser.tabs', () => {
     expect(chrome.tabs.reload).toHaveBeenCalledTimes(1);
     expect(callback).toHaveBeenCalledTimes(1);
   });
+  test('sendMessage', (done) => {
+    const callback = jest.fn(() => done());
+    expect(jest.isMockFunction(chrome.tabs.sendMessage)).toBe(true);
+    chrome.tabs.sendMessage(1, { test: 'message' }, callback);
+    expect(chrome.tabs.sendMessage).toHaveBeenCalledTimes(1);
+    expect(callback).toHaveBeenCalledTimes(1);
+    chrome.tabs.sendMessage(1, { test: 'message' });
+    expect(chrome.tabs.sendMessage).toHaveBeenCalledTimes(2);
+  });
+  test('sendMessage listener', (done) => {
+    const listener = jest.fn();
+    browser.runtime.onMessage.addListener(listener);
+    chrome.tabs.sendMessage(1, { test: 'message' }, done);
+    expect(listener).toHaveBeenCalledWith(1, { test: 'message' });
+  });
+  test('sendMessage promise', () => {
+    return expect(chrome.tabs.sendMessage({})).resolves.toBeUndefined();
+  });
 });
