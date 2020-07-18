@@ -5,7 +5,7 @@ describe('browser.browserAction', () => {
     browser.browserAction.setTitle(title);
     expect(browser.browserAction.setTitle).toHaveBeenCalledWith(title);
   });
-  test('getTitle', done => {
+  test('getTitle', (done) => {
     const callback = jest.fn(() => done());
     expect(jest.isMockFunction(browser.browserAction.getTitle)).toBe(true);
     browser.browserAction.getTitle({}, callback);
@@ -29,7 +29,7 @@ describe('browser.browserAction', () => {
     browser.browserAction.setPopup(details);
     expect(browser.browserAction.setPopup).toHaveBeenCalledWith(details);
   });
-  test('getPopup', done => {
+  test('getPopup', (done) => {
     const callback = jest.fn(() => done());
     expect(jest.isMockFunction(browser.browserAction.getPopup)).toBe(true);
     browser.browserAction.getPopup({}, callback);
@@ -46,7 +46,7 @@ describe('browser.browserAction', () => {
     browser.browserAction.setBadgeText(text);
     expect(browser.browserAction.setBadgeText).toHaveBeenCalledWith(text);
   });
-  test('getBadgeText', done => {
+  test('getBadgeText', (done) => {
     const callback = jest.fn(() => done());
     expect(jest.isMockFunction(browser.browserAction.getBadgeText)).toBe(true);
     browser.browserAction.getBadgeText({}, callback);
@@ -69,7 +69,7 @@ describe('browser.browserAction', () => {
       details
     );
   });
-  test('getBadgeBackgroundColor', done => {
+  test('getBadgeBackgroundColor', (done) => {
     const callback = jest.fn(() => done());
     expect(
       jest.isMockFunction(browser.browserAction.getBadgeBackgroundColor)

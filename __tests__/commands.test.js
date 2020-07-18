@@ -1,5 +1,5 @@
 describe('browser.commands', () => {
-  test('getAll', done => {
+  test('getAll', (done) => {
     const callback = jest.fn(() => done());
     expect(jest.isMockFunction(browser.commands.getAll)).toBe(true);
     browser.commands.getAll(callback);
