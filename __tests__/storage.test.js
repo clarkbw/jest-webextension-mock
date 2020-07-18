@@ -1,5 +1,5 @@
 describe('browser.storage', () => {
-  ['addListener', 'removeListener', 'hasListener'].forEach(method => {
+  ['addListener', 'removeListener', 'hasListener'].forEach((method) => {
     test(`onChanged.${method}`, () => {
       const callback = jest.fn();
       expect(jest.isMockFunction(browser.storage.onChanged[method])).toBe(true);
@@ -11,37 +11,37 @@ describe('browser.storage', () => {
 });
 
 describe('browser.storage', () => {
-  ['sync', 'local', 'managed'].forEach(type => {
+  ['sync', 'local', 'managed'].forEach((type) => {
     describe(type, () => {
       const storage = browser.storage[type];
       describe('get', () => {
         expect(jest.isMockFunction(storage.get)).toBe(true);
-        test('a string key', done => {
+        test('a string key', (done) => {
           const key = 'test';
-          storage.get(key, result => {
+          storage.get(key, (result) => {
             expect(result).toBeDefined();
             expect(typeof result === 'object').toBeTruthy();
             expect(result).toHaveProperty(key, undefined);
             done();
           });
         });
-        test('an array key', done => {
+        test('an array key', (done) => {
           const keys = ['test1', 'test2'];
-          storage.get(keys, result => {
+          storage.get(keys, (result) => {
             expect(result).toBeDefined();
             expect(typeof result === 'object').toBeTruthy();
-            keys.forEach(k => {
+            keys.forEach((k) => {
               expect(result).toHaveProperty(k, undefined);
             });
             done();
           });
         });
-        test('an object key', done => {
+        test('an object key', (done) => {
           const key = { test: [] };
-          storage.get(key, result => {
+          storage.get(key, (result) => {
             expect(result).toBeDefined();
             expect(typeof result === 'object').toBeTruthy();
-            Object.keys(key).forEach(k => {
+            Object.keys(key).forEach((k) => {
               expect(result).toHaveProperty(k);
               expect(result[k]).toEqual(key[k]);
             });
@@ -68,7 +68,7 @@ describe('browser.storage', () => {
         const key = 'key';
         return expect(storage.get(key)).resolves.toEqual({ key: undefined });
       });
-      test('getBytesInUse', done => {
+      test('getBytesInUse', (done) => {
         const callback = jest.fn(() => done());
         expect(jest.isMockFunction(storage.getBytesInUse)).toBe(true);
         storage.getBytesInUse('key', callback);
@@ -78,7 +78,7 @@ describe('browser.storage', () => {
       test('getBytesInUse promise', () => {
         return expect(storage.getBytesInUse('key')).resolves.toBe(0);
       });
-      test('set', done => {
+      test('set', (done) => {
         const callback = jest.fn(() => done());
         expect(jest.isMockFunction(storage.set)).toBe(true);
         storage.set({ key: 'foo' }, callback);
@@ -88,7 +88,7 @@ describe('browser.storage', () => {
       test('set promise', () => {
         return expect(storage.set(1)).resolves.toBeUndefined();
       });
-      test('remove', done => {
+      test('remove', (done) => {
         const callback = jest.fn(() => done());
         expect(jest.isMockFunction(storage.remove)).toBe(true);
         storage.remove('key', callback);
@@ -98,7 +98,7 @@ describe('browser.storage', () => {
       test('remove promise', () => {
         return expect(storage.remove(['foo', 'bar'])).resolves.toBeUndefined();
       });
-      test('clear', done => {
+      test('clear', (done) => {
         const callback = jest.fn(() => done());
         expect(jest.isMockFunction(browser.storage.sync.clear)).toBe(true);
         storage.clear(callback);
@@ -108,7 +108,7 @@ describe('browser.storage', () => {
       test('clear promise', () => {
         return expect(storage.clear()).resolves.toBeUndefined();
       });
-      test('real scenario', done => {
+      test('real scenario', (done) => {
         expect(jest.isMockFunction(storage.get)).toBe(true);
         expect(jest.isMockFunction(storage.set)).toBe(true);
         expect(jest.isMockFunction(storage.remove)).toBe(true);
@@ -116,7 +116,7 @@ describe('browser.storage', () => {
         // set keys
         storage.set({ key: 'value', foo: 'bar', foo2: 'bar2' }, () => {
           // get 'key'
-          storage.get(['key'], result => {
+          storage.get(['key'], (result) => {
             expect(result).toBeDefined();
             expect(typeof result === 'object').toBeTruthy();
             expect(result).toHaveProperty('key', 'value');
@@ -125,13 +125,13 @@ describe('browser.storage', () => {
             // remove 'key'
             storage.remove('key', () => {
               // get all values
-              storage.get(null, result => {
+              storage.get(null, (result) => {
                 expect(result).toHaveProperty('key', undefined);
                 expect(result).toHaveProperty('foo', 'bar');
                 expect(result).toHaveProperty('foo2', 'bar2');
                 // clear values
                 storage.clear(() => {
-                  storage.get(['key', 'foo', 'foo2'], result => {
+                  storage.get(['key', 'foo', 'foo2'], (result) => {
                     expect(result).toHaveProperty('key', undefined);
                     expect(result).toHaveProperty('foo', undefined);
                     expect(result).toHaveProperty('foo2', undefined);

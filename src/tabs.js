@@ -2,7 +2,7 @@
 
 export const tabs = {
   get: jest.fn((id = '', cb = () => {}) => cb({})),
-  getCurrent: jest.fn(cb => cb({})),
+  getCurrent: jest.fn((cb) => cb({})),
   connect: jest.fn((id = '', info = {}) => {
     // returns a Port
     return {
@@ -37,7 +37,7 @@ export const tabs = {
     cb(Object.assign({}, props, { id }))
   ),
   move: jest.fn((ids = [], props = {}, cb = () => {}) =>
-    cb(ids.map(id => Object.assign({}, props, { id })))
+    cb(ids.map((id) => Object.assign({}, props, { id })))
   ),
   onUpdated: {
     addListener: jest.fn(),
