@@ -35,7 +35,7 @@ export const storage = {
       return Promise.resolve(0);
     }),
     set: jest.fn((payload, cb) => {
-      Object.keys(payload).forEach(key => (store[key] = payload[key]));
+      Object.keys(payload).forEach((key) => (store[key] = payload[key]));
       if (cb !== undefined) {
         return cb();
       }
@@ -43,13 +43,13 @@ export const storage = {
     }),
     remove: jest.fn((id, cb) => {
       const keys = typeof id === 'string' ? [id] : id;
-      keys.forEach(key => delete store[key]);
+      keys.forEach((key) => delete store[key]);
       if (cb !== undefined) {
         return cb();
       }
       return Promise.resolve();
     }),
-    clear: jest.fn(cb => {
+    clear: jest.fn((cb) => {
       store = {};
       if (cb !== undefined) {
         return cb();
@@ -72,7 +72,7 @@ export const storage = {
       return Promise.resolve(0);
     }),
     set: jest.fn((payload, cb) => {
-      Object.keys(payload).forEach(key => (store[key] = payload[key]));
+      Object.keys(payload).forEach((key) => (store[key] = payload[key]));
       if (cb !== undefined) {
         return cb();
       }
@@ -80,13 +80,13 @@ export const storage = {
     }),
     remove: jest.fn((id, cb) => {
       const keys = typeof id === 'string' ? [id] : id;
-      keys.forEach(key => delete store[key]);
+      keys.forEach((key) => delete store[key]);
       if (cb !== undefined) {
         return cb();
       }
       return Promise.resolve();
     }),
-    clear: jest.fn(cb => {
+    clear: jest.fn((cb) => {
       store = {};
       if (cb !== undefined) {
         return cb();
@@ -109,7 +109,7 @@ export const storage = {
       return Promise.resolve(0);
     }),
     set: jest.fn((payload, cb) => {
-      Object.keys(payload).forEach(key => (store[key] = payload[key]));
+      Object.keys(payload).forEach((key) => (store[key] = payload[key]));
       if (cb !== undefined) {
         return cb();
       }
@@ -117,13 +117,13 @@ export const storage = {
     }),
     remove: jest.fn((id, cb) => {
       const keys = typeof id === 'string' ? [id] : id;
-      keys.forEach(key => delete store[key]);
+      keys.forEach((key) => delete store[key]);
       if (cb !== undefined) {
         return cb();
       }
       return Promise.resolve();
     }),
-    clear: jest.fn(cb => {
+    clear: jest.fn((cb) => {
       store = {};
       if (cb !== undefined) {
         return cb();

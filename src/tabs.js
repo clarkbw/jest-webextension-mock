@@ -1,8 +1,9 @@
 // https://developer.chrome.com/extensions/tabs
+import { onMessageListeners } from './runtime';
 
 export const tabs = {
   get: jest.fn((id = '', cb = () => {}) => cb({})),
-  getCurrent: jest.fn(cb => cb({})),
+  getCurrent: jest.fn((cb) => cb({})),
   connect: jest.fn((id = '', info = {}) => {
     // returns a Port
     return {
@@ -37,13 +38,19 @@ export const tabs = {
     cb(Object.assign({}, props, { id }))
   ),
   move: jest.fn((ids = [], props = {}, cb = () => {}) =>
-    cb(ids.map(id => Object.assign({}, props, { id })))
+    cb(ids.map((id) => Object.assign({}, props, { id })))
   ),
   onUpdated: {
     addListener: jest.fn(),
     removeListener: jest.fn(),
     hasListener: jest.fn(),
   },
-  sendMessage: jest.fn(),
+  sendMessage: jest.fn((tabId, message, cb) => {
+    onMessageListeners.forEach((listener) => listener(tabId, message));
+    if (cb !== undefined) {
+      return cb();
+    }
+    return Promise.resolve();
+  }),
   reload: jest.fn((tabId, reloadProperties, cb) => cb()),
 };

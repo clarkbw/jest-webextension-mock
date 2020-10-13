@@ -1,6 +1,6 @@
-let onMessageListeners = [];
+export let onMessageListeners = [];
 export const runtime = {
-  connect: jest.fn(function({ name }) {
+  connect: jest.fn(function ({ name }) {
     return {
       name,
       postMessage: jest.fn(),
@@ -8,7 +8,7 @@ export const runtime = {
         addListener: jest.fn(),
       },
       onMessage: {
-        addListener: jest.fn(listener => {
+        addListener: jest.fn((listener) => {
           onMessageListeners.push(listener);
         }),
       },
@@ -16,20 +16,22 @@ export const runtime = {
     };
   }),
   sendMessage: jest.fn((message, cb) => {
-    onMessageListeners.forEach(listener => listener(message));
+    onMessageListeners.forEach((listener) => listener(message));
     if (cb !== undefined) {
       return cb();
     }
     return Promise.resolve();
   }),
   onMessage: {
-    addListener: jest.fn(listener => {
+    addListener: jest.fn((listener) => {
       onMessageListeners.push(listener);
     }),
-    removeListener: jest.fn(listener => {
-      onMessageListeners = onMessageListeners.filter(lstn => lstn !== listener);
+    removeListener: jest.fn((listener) => {
+      onMessageListeners = onMessageListeners.filter(
+        (lstn) => lstn !== listener
+      );
     }),
-    hasListener: jest.fn(listener => onMessageListeners.includes(listener)),
+    hasListener: jest.fn((listener) => onMessageListeners.includes(listener)),
   },
   onConnect: {
     addListener: jest.fn(),
@@ -41,7 +43,7 @@ export const runtime = {
     removeListener: jest.fn(),
     hasListener: jest.fn(),
   },
-  getURL: jest.fn(function(path) {
+  getURL: jest.fn(function (path) {
     return path;
   }),
   openOptionsPage: jest.fn(),

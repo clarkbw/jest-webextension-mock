@@ -22,8 +22,8 @@ export const notifications = {
   create: jest.fn(create),
   update: jest.fn((notificationId, options, cb) => cbOrPromise(cb, true)),
   clear: jest.fn((notificationId, cb) => cbOrPromise(cb, true)),
-  getAll: jest.fn(cb => cbOrPromise(cb, [])),
-  getPermissionLevel: jest.fn(cb => cbOrPromise(cb, 'granted')),
+  getAll: jest.fn((cb) => cbOrPromise(cb, [])),
+  getPermissionLevel: jest.fn((cb) => cbOrPromise(cb, 'granted')),
   onClosed: {
     addListener: jest.fn(),
   },

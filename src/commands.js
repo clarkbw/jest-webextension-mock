@@ -1,7 +1,7 @@
 // https://developer.chrome.com/extensions/commands
 
 export const commands = {
-  getAll: jest.fn(cb => {
+  getAll: jest.fn((cb) => {
     if (cb !== undefined) {
       return cb();
     }

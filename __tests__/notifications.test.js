@@ -1,5 +1,5 @@
 describe('chrome.notifications', () => {
-  test('create', done => {
+  test('create', (done) => {
     const options = { type: 'basic' };
     const callback = jest.fn(() => done());
 
@@ -31,7 +31,7 @@ describe('chrome.notifications', () => {
     );
   });
 
-  test('update', done => {
+  test('update', (done) => {
     const options = { type: 'basic' };
     const callback = jest.fn(() => done());
 
@@ -52,7 +52,7 @@ describe('chrome.notifications', () => {
     return expect(chrome.notifications.update(options)).resolves.toBe(true);
   });
 
-  test('clear', done => {
+  test('clear', (done) => {
     const callback = jest.fn(() => done());
 
     expect(jest.isMockFunction(chrome.notifications.clear)).toBe(true);
@@ -66,7 +66,7 @@ describe('chrome.notifications', () => {
     return expect(chrome.notifications.clear('id')).resolves.toBe(true);
   });
 
-  test('getAll', done => {
+  test('getAll', (done) => {
     const callback = jest.fn(() => done());
 
     expect(jest.isMockFunction(chrome.notifications.getAll)).toBe(true);
@@ -80,7 +80,7 @@ describe('chrome.notifications', () => {
     return expect(chrome.notifications.getAll()).resolves.toEqual([]);
   });
 
-  test('getPermissionLevel', done => {
+  test('getPermissionLevel', (done) => {
     const callback = jest.fn(() => done());
 
     expect(jest.isMockFunction(chrome.notifications.getPermissionLevel)).toBe(

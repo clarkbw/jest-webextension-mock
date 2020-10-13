@@ -1,12 +1,12 @@
 describe('browser.tabs', () => {
-  test('get', done => {
+  test('get', (done) => {
     const callback = jest.fn(() => done());
     expect(jest.isMockFunction(chrome.tabs.get)).toBe(true);
     chrome.tabs.get(1, callback);
     expect(chrome.tabs.get).toHaveBeenCalledTimes(1);
     expect(callback).toHaveBeenCalledTimes(1);
   });
-  test('getCurrent', done => {
+  test('getCurrent', (done) => {
     const callback = jest.fn(() => done());
     expect(jest.isMockFunction(chrome.tabs.getCurrent)).toBe(true);
     chrome.tabs.getCurrent(callback);
@@ -24,7 +24,7 @@ describe('browser.tabs', () => {
     expect(jest.isMockFunction(connection.onMessage.addListener)).toBe(true);
     expect(chrome.tabs.connect).toHaveBeenCalledTimes(1);
   });
-  test('create', done => {
+  test('create', (done) => {
     const callback = jest.fn(() => done());
     const props = { pinned: true };
     expect(jest.isMockFunction(chrome.tabs.create)).toBe(true);
@@ -37,7 +37,7 @@ describe('browser.tabs', () => {
     const props = { pinned: true };
     return expect(chrome.tabs.create(props)).resolves.toBe(props);
   });
-  test('duplicate', done => {
+  test('duplicate', (done) => {
     const callback = jest.fn(() => done());
     expect(jest.isMockFunction(chrome.tabs.duplicate)).toBe(true);
     chrome.tabs.duplicate(1, callback);
@@ -45,7 +45,7 @@ describe('browser.tabs', () => {
     expect(callback).toHaveBeenCalledTimes(1);
     expect(callback).toHaveBeenCalledWith({ id: 1 });
   });
-  test('remove', done => {
+  test('remove', (done) => {
     const callback = jest.fn(() => done());
     expect(jest.isMockFunction(chrome.tabs.remove)).toBe(true);
     chrome.tabs.remove([1], callback);
@@ -55,7 +55,7 @@ describe('browser.tabs', () => {
   test('remove promise', () => {
     expect(chrome.tabs.remove([1])).resolves.toBeUndefined();
   });
-  test('query', done => {
+  test('query', (done) => {
     const callback = jest.fn(() => done());
     expect(jest.isMockFunction(chrome.tabs.query)).toBe(true);
     chrome.tabs.query({ pinned: true }, callback);
@@ -63,14 +63,14 @@ describe('browser.tabs', () => {
     expect(callback).toHaveBeenCalledTimes(1);
     expect(callback).toHaveBeenCalledWith([{}]);
   });
-  test('highlight', done => {
+  test('highlight', (done) => {
     const callback = jest.fn(() => done());
     expect(jest.isMockFunction(chrome.tabs.highlight)).toBe(true);
     chrome.tabs.highlight({}, callback);
     expect(chrome.tabs.highlight).toHaveBeenCalledTimes(1);
     expect(callback).toHaveBeenCalledTimes(1);
   });
-  test('update', done => {
+  test('update', (done) => {
     const callback = jest.fn(() => done());
     const props = { pinned: true };
     expect(jest.isMockFunction(chrome.tabs.update)).toBe(true);
@@ -81,7 +81,7 @@ describe('browser.tabs', () => {
     chrome.tabs.update(props);
     expect(chrome.tabs.update).toHaveBeenCalledTimes(2);
   });
-  test('move', done => {
+  test('move', (done) => {
     const callback = jest.fn(() => done());
     const props = { pinned: true };
     expect(jest.isMockFunction(chrome.tabs.move)).toBe(true);
@@ -94,7 +94,7 @@ describe('browser.tabs', () => {
       { id: 3, pinned: true },
     ]);
   });
-  ['addListener', 'removeListener', 'hasListener'].forEach(method => {
+  ['addListener', 'removeListener', 'hasListener'].forEach((method) => {
     test(`onUpdated.${method}`, () => {
       const callback = jest.fn();
       expect(jest.isMockFunction(browser.tabs.onUpdated[method])).toBe(true);
@@ -111,5 +111,23 @@ describe('browser.tabs', () => {
 
     expect(chrome.tabs.reload).toHaveBeenCalledTimes(1);
     expect(callback).toHaveBeenCalledTimes(1);
+  });
+  test('sendMessage', (done) => {
+    const callback = jest.fn(() => done());
+    expect(jest.isMockFunction(chrome.tabs.sendMessage)).toBe(true);
+    chrome.tabs.sendMessage(1, { test: 'message' }, callback);
+    expect(chrome.tabs.sendMessage).toHaveBeenCalledTimes(1);
+    expect(callback).toHaveBeenCalledTimes(1);
+    chrome.tabs.sendMessage(1, { test: 'message' });
+    expect(chrome.tabs.sendMessage).toHaveBeenCalledTimes(2);
+  });
+  test('sendMessage listener', (done) => {
+    const listener = jest.fn();
+    browser.runtime.onMessage.addListener(listener);
+    chrome.tabs.sendMessage(1, { test: 'message' }, done);
+    expect(listener).toHaveBeenCalledWith(1, { test: 'message' });
+  });
+  test('sendMessage promise', () => {
+    return expect(chrome.tabs.sendMessage({})).resolves.toBeUndefined();
   });
 });

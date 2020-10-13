@@ -17,7 +17,7 @@ describe('browser.runtime', () => {
     expect(jest.isMockFunction(connection.disconnect)).toBe(true);
     expect(browser.runtime.connect).toHaveBeenCalledTimes(1);
   });
-  test('connect.onMessage listener', done => {
+  test('connect.onMessage listener', (done) => {
     const name = 'CONNECT_NAME';
     const listener = jest.fn();
     browser.runtime.connect(name).onMessage.addListener(listener);
@@ -31,7 +31,7 @@ describe('browser.runtime', () => {
     expect(respPath).toEqual(path);
     expect(browser.runtime.getURL).toHaveBeenCalledTimes(1);
   });
-  test('sendMessage', done => {
+  test('sendMessage', (done) => {
     const callback = jest.fn(() => done());
     expect(jest.isMockFunction(browser.runtime.sendMessage)).toBe(true);
     browser.runtime.sendMessage({ test: 'message' }, callback);
@@ -40,7 +40,7 @@ describe('browser.runtime', () => {
     browser.runtime.sendMessage({ test: 'message' });
     expect(browser.runtime.sendMessage).toHaveBeenCalledTimes(2);
   });
-  test('sendMessage listener', done => {
+  test('sendMessage listener', (done) => {
     const listener = jest.fn();
     browser.runtime.onMessage.addListener(listener);
     browser.runtime.sendMessage({ test: 'message' }, done);
@@ -79,7 +79,7 @@ describe('browser.runtime', () => {
     expect(browser.runtime.onMessage.hasListener).toHaveBeenCalledTimes(1);
     expect(callback).toHaveBeenCalledTimes(0);
   });
-  ['addListener', 'removeListener', 'hasListener'].forEach(method => {
+  ['addListener', 'removeListener', 'hasListener'].forEach((method) => {
     test(`onConnect.${method}`, () => {
       const callback = jest.fn();
       expect(jest.isMockFunction(browser.runtime.onConnect[method])).toBe(true);
@@ -88,7 +88,7 @@ describe('browser.runtime', () => {
       expect(callback).toHaveBeenCalledTimes(0);
     });
   });
-  ['addListener', 'removeListener', 'hasListener'].forEach(method => {
+  ['addListener', 'removeListener', 'hasListener'].forEach((method) => {
     test(`onInstalled.${method}`, () => {
       const callback = jest.fn();
       expect(jest.isMockFunction(browser.runtime.onInstalled[method])).toBe(
