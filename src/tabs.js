@@ -45,6 +45,11 @@ export const tabs = {
     removeListener: jest.fn(),
     hasListener: jest.fn(),
   },
+  onActivated: {
+    addListener: jest.fn(),
+    removeListener: jest.fn(),
+    hasListener: jest.fn(),
+  },
   sendMessage: jest.fn((tabId, message, cb) => {
     onMessageListeners.forEach((listener) => listener(tabId, message));
     if (cb !== undefined) {
