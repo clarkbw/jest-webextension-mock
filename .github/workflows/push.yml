@@ -11,19 +11,18 @@ jobs:
     - name: Get yarn cache directory path
       id: yarn-cache-dir-path
       run: echo "::set-output name=dir::$(yarn config get cacheFolder)"
-    - name: Cache node_modules
+    - name: Cache install packages
       id: cache-modules
     - uses: actions/cache@v2
       id: yarn-cache
       with:
         path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
         key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-        restore-keys: |
-          ${{ runner.os }}-yarn-
-    - name: Build
+        restore-keys: ${{ runner.os }}-yarn-
+    - name: Yarn Install
       if: steps.yarn-cache.outputs.cache-hit != 'true'
       run: yarn install
-    - name: Test
+    - name: Yarn Test
       run: yarn test
     - name: CodeCov Report
       uses: codecov/codecov-action@v1
