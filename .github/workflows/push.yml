@@ -1,11 +1,20 @@
-on: push
-
 name: Build and Test
 
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
 jobs:
-  all:
-    name: Build and Test
+  build:
+
     runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [10.x, 12.x, 14.x]
+
     steps:
     - uses: actions/checkout@v2
     - name: Get yarn cache directory path
@@ -17,10 +26,10 @@ jobs:
         path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
         key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
         restore-keys: ${{ runner.os }}-yarn-
-    - name: Yarn Install
-      run: yarn install
-    - name: Yarn Test
-      run: yarn test
-    - name: CodeCov Report
-      uses: codecov/codecov-action@v1
-
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+    - run: yarn install
+    - run: yarn test
+    - uses: codecov/codecov-action@v1
