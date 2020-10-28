@@ -4,6 +4,7 @@ name: Build and Test
 
 jobs:
   all:
+    name: Build and Test
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
@@ -17,7 +18,6 @@ jobs:
         key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
         restore-keys: ${{ runner.os }}-yarn-
     - name: Yarn Install
-      if: steps.yarn-cache.outputs.cache-hit != 'true'
       run: yarn install
     - name: Yarn Test
       run: yarn test
