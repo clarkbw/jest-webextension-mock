@@ -7,15 +7,21 @@ jobs:
     name: Build and Publish
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@master
+    - uses: actions/checkout@v2
+    - name: Get yarn cache directory path
+      id: yarn-cache-dir-path
+      run: echo "::set-output name=dir::$(yarn config get cacheFolder)"
     - name: Cache node_modules
       id: cache-modules
-      uses: actions/cache@v1
+    - uses: actions/cache@v2
+      id: yarn-cache
       with:
-        path: node_modules
-        key: ${{ runner.OS }}-build-${{ hashFiles('package.json') }}
+        path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+        key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-yarn-
     - name: Build
-      if: steps.cache-modules.outputs.cache-hit != 'true'
+      if: steps.yarn-cache.outputs.cache-hit != 'true'
       run: yarn install
     - name: Test
       run: yarn test
