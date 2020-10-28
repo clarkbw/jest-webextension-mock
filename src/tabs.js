@@ -40,7 +40,52 @@ export const tabs = {
   move: jest.fn((ids = [], props = {}, cb = () => {}) =>
     cb(ids.map((id) => Object.assign({}, props, { id })))
   ),
+  onCreated: {
+    addListener: jest.fn(),
+    removeListener: jest.fn(),
+    hasListener: jest.fn(),
+  },
   onUpdated: {
+    addListener: jest.fn(),
+    removeListener: jest.fn(),
+    hasListener: jest.fn(),
+  },
+  onMoved: {
+    addListener: jest.fn(),
+    removeListener: jest.fn(),
+    hasListener: jest.fn(),
+  },
+  onActivated: {
+    addListener: jest.fn(),
+    removeListener: jest.fn(),
+    hasListener: jest.fn(),
+  },
+  onHighlighted: {
+    addListener: jest.fn(),
+    removeListener: jest.fn(),
+    hasListener: jest.fn(),
+  },
+  onDetached: {
+    addListener: jest.fn(),
+    removeListener: jest.fn(),
+    hasListener: jest.fn(),
+  },
+  onAttached: {
+    addListener: jest.fn(),
+    removeListener: jest.fn(),
+    hasListener: jest.fn(),
+  },
+  onRemoved: {
+    addListener: jest.fn(),
+    removeListener: jest.fn(),
+    hasListener: jest.fn(),
+  },
+  onReplaced: {
+    addListener: jest.fn(),
+    removeListener: jest.fn(),
+    hasListener: jest.fn(),
+  },
+  onZoomChange: {
     addListener: jest.fn(),
     removeListener: jest.fn(),
     hasListener: jest.fn(),
