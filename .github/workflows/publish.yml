@@ -1,10 +1,13 @@
-on: push
+on:
+  push:
+    branches:
+      - master
 
-name: Build and Test
+name: Publish
 
 jobs:
   all:
-    name: Build and Test
+    name: Publish
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
@@ -21,6 +24,9 @@ jobs:
       run: yarn install
     - name: Yarn Test
       run: yarn test
-    - name: CodeCov Report
-      uses: codecov/codecov-action@v1
-
+    - name: Publish
+      if: github.ref == 'refs/heads/master'
+      uses: mikeal/merge-release@master
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
