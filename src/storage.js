@@ -1,4 +1,9 @@
 let store = {};
+const onChangedListeners = {
+  sync: [],
+  local: [],
+  managed: [],
+};
 
 function resolveKey(key) {
   if (typeof key === 'string') {
@@ -35,7 +40,19 @@ export const storage = {
       return Promise.resolve(0);
     }),
     set: jest.fn((payload, cb) => {
-      Object.keys(payload).forEach((key) => (store[key] = payload[key]));
+      let changes = {};
+      Object.keys(payload).forEach((key) => {
+        changes[key] = {
+          newValue: payload[key],
+        };
+        if (store.hasOwnProperty(key)) {
+          changes[key].oldValue = store[key];
+        }
+        store[key] = payload[key];
+      });
+      onChangedListeners.sync.forEach((listener) => {
+        listener(changes);
+      });
       if (cb !== undefined) {
         return cb();
       }
@@ -43,20 +60,48 @@ export const storage = {
     }),
     remove: jest.fn((id, cb) => {
       const keys = typeof id === 'string' ? [id] : id;
-      keys.forEach((key) => delete store[key]);
+
+      let changes = {};
+      keys.forEach((key) => {
+        if (store.hasOwnProperty(key)) {
+          changes[key] = {
+            oldValue: store[key],
+          };
+        }
+        delete store[key];
+      });
+      onChangedListeners.sync.forEach((listener) => {
+        listener(changes);
+      });
       if (cb !== undefined) {
         return cb();
       }
       return Promise.resolve();
     }),
     clear: jest.fn((cb) => {
+      const changes = Object.keys(store).reduce(
+        (changeMap, key) => ({
+          ...changeMap,
+          [key]: { oldValue: store[key] },
+        }),
+        {}
+      );
       store = {};
+      onChangedListeners.sync.forEach((listener) => {
+        listener(changes);
+      });
       if (cb !== undefined) {
         return cb();
       }
       return Promise.resolve();
     }),
+    onChanged: {
+      addListener: jest.fn((cb) => {
+        onChangedListeners.sync.push(cb);
+      }),
+    },
   },
+
   local: {
     get: jest.fn((id, cb) => {
       const result = id === null ? store : resolveKey(id);
@@ -72,7 +117,19 @@ export const storage = {
       return Promise.resolve(0);
     }),
     set: jest.fn((payload, cb) => {
-      Object.keys(payload).forEach((key) => (store[key] = payload[key]));
+      let changes = {};
+      Object.keys(payload).forEach((key) => {
+        changes[key] = {
+          newValue: payload[key],
+        };
+        if (store.hasOwnProperty(key)) {
+          changes[key].oldValue = store[key];
+        }
+        store[key] = payload[key];
+      });
+      onChangedListeners.local.forEach((listener) => {
+        listener(changes);
+      });
       if (cb !== undefined) {
         return cb();
       }
@@ -80,20 +137,48 @@ export const storage = {
     }),
     remove: jest.fn((id, cb) => {
       const keys = typeof id === 'string' ? [id] : id;
-      keys.forEach((key) => delete store[key]);
+
+      let changes = {};
+      keys.forEach((key) => {
+        if (store.hasOwnProperty(key)) {
+          changes[key] = {
+            oldValue: store[key],
+          };
+        }
+        delete store[key];
+      });
+      onChangedListeners.local.forEach((listener) => {
+        listener(changes);
+      });
       if (cb !== undefined) {
         return cb();
       }
       return Promise.resolve();
     }),
     clear: jest.fn((cb) => {
+      const changes = Object.keys(store).reduce(
+        (changeMap, key) => ({
+          ...changeMap,
+          [key]: { oldValue: store[key] },
+        }),
+        {}
+      );
       store = {};
+      onChangedListeners.local.forEach((listener) => {
+        listener(changes);
+      });
       if (cb !== undefined) {
         return cb();
       }
       return Promise.resolve();
     }),
+    onChanged: {
+      addListener: jest.fn((cb) => {
+        onChangedListeners.local.push(cb);
+      }),
+    },
   },
+
   managed: {
     get: jest.fn((id, cb) => {
       const result = id === null ? store : resolveKey(id);
@@ -109,7 +194,19 @@ export const storage = {
       return Promise.resolve(0);
     }),
     set: jest.fn((payload, cb) => {
-      Object.keys(payload).forEach((key) => (store[key] = payload[key]));
+      let changes = {};
+      Object.keys(payload).forEach((key) => {
+        changes[key] = {
+          newValue: payload[key],
+        };
+        if (store.hasOwnProperty(key)) {
+          changes[key].oldValue = store[key];
+        }
+        store[key] = payload[key];
+      });
+      onChangedListeners.managed.forEach((listener) => {
+        listener(changes);
+      });
       if (cb !== undefined) {
         return cb();
       }
@@ -117,19 +214,46 @@ export const storage = {
     }),
     remove: jest.fn((id, cb) => {
       const keys = typeof id === 'string' ? [id] : id;
-      keys.forEach((key) => delete store[key]);
+
+      let changes = {};
+      keys.forEach((key) => {
+        if (store.hasOwnProperty(key)) {
+          changes[key] = {
+            oldValue: store[key],
+          };
+        }
+        delete store[key];
+      });
+      onChangedListeners.managed.forEach((listener) => {
+        listener(changes);
+      });
       if (cb !== undefined) {
         return cb();
       }
       return Promise.resolve();
     }),
     clear: jest.fn((cb) => {
+      const changes = Object.keys(store).reduce(
+        (changeMap, key) => ({
+          ...changeMap,
+          [key]: { oldValue: store[key] },
+        }),
+        {}
+      );
       store = {};
+      onChangedListeners.managed.forEach((listener) => {
+        listener(changes);
+      });
       if (cb !== undefined) {
         return cb();
       }
       return Promise.resolve();
     }),
+    onChanged: {
+      addListener: jest.fn((cb) => {
+        onChangedListeners.managed.push(cb);
+      }),
+    },
   },
   onChanged: {
     addListener: jest.fn(),
