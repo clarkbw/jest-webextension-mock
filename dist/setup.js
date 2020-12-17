@@ -17,6 +17,64 @@ var omnibox = {
   }
 };
 
+var onMessageListeners = [];
+var runtime = {
+  connect: jest.fn(function (_ref) {
+    var name = _ref.name;
+    return {
+      name: name,
+      postMessage: jest.fn(),
+      onDisconnect: {
+        addListener: jest.fn()
+      },
+      onMessage: {
+        addListener: jest.fn(function (listener) {
+          onMessageListeners.push(listener);
+        })
+      },
+      disconnect: jest.fn()
+    };
+  }),
+  sendMessage: jest.fn(function (message, cb) {
+    onMessageListeners.forEach(function (listener) {
+      return listener(message);
+    });
+
+    if (cb !== undefined) {
+      return cb();
+    }
+
+    return Promise.resolve();
+  }),
+  onMessage: {
+    addListener: jest.fn(function (listener) {
+      onMessageListeners.push(listener);
+    }),
+    removeListener: jest.fn(function (listener) {
+      onMessageListeners = onMessageListeners.filter(function (lstn) {
+        return lstn !== listener;
+      });
+    }),
+    hasListener: jest.fn(function (listener) {
+      return onMessageListeners.includes(listener);
+    })
+  },
+  onConnect: {
+    addListener: jest.fn(),
+    removeListener: jest.fn(),
+    hasListener: jest.fn()
+  },
+  onInstalled: {
+    addListener: jest.fn(),
+    removeListener: jest.fn(),
+    hasListener: jest.fn()
+  },
+  getURL: jest.fn(function (path) {
+    return path;
+  }),
+  openOptionsPage: jest.fn()
+};
+
 // https://developer.chrome.com/extensions/tabs
 var tabs = {
   get: jest.fn(function () {
@@ -97,30 +155,9 @@ var tabs = {
     removeListener: jest.fn(),
     hasListener: jest.fn()
   },
-  sendMessage: jest.fn()
-};
-
-var onMessageListeners = [];
-var runtime = {
-  connect: jest.fn(function (_ref) {
-    var name = _ref.name;
-    return {
-      name: name,
-      postMessage: jest.fn(),
-      onDisconnect: {
-        addListener: jest.fn()
-      },
-      onMessage: {
-        addListener: jest.fn(function (listener) {
-          onMessageListeners.push(listener);
-        })
-      },
-      disconnect: jest.fn()
-    };
-  }),
-  sendMessage: jest.fn(function (message, cb) {
+  sendMessage: jest.fn(function (tabId, message, cb) {
     onMessageListeners.forEach(function (listener) {
-      return listener(message);
+      return listener(tabId, message);
     });
 
     if (cb !== undefined) {
@@ -129,33 +166,9 @@ var runtime = {
 
     return Promise.resolve();
   }),
-  onMessage: {
-    addListener: jest.fn(function (listener) {
-      onMessageListeners.push(listener);
-    }),
-    removeListener: jest.fn(function (listener) {
-      onMessageListeners = onMessageListeners.filter(function (lstn) {
-        return lstn !== listener;
-      });
-    }),
-    hasListener: jest.fn(function (listener) {
-      return onMessageListeners.includes(listener);
-    })
-  },
-  onConnect: {
-    addListener: jest.fn(),
-    removeListener: jest.fn(),
-    hasListener: jest.fn()
-  },
-  onInstalled: {
-    addListener: jest.fn(),
-    removeListener: jest.fn(),
-    hasListener: jest.fn()
-  },
-  getURL: jest.fn(function (path) {
-    return path;
-  }),
-  openOptionsPage: jest.fn()
+  reload: jest.fn(function (tabId, reloadProperties, cb) {
+    return cb();
+  })
 };
 
 function _typeof(obj) {
@@ -464,6 +477,10 @@ var webNavigation = {
   }
 };
 
+var extension = {
+  getURL: jest.fn()
+};
+
 var geckoProfiler = {
   stop: jest.fn(function () {
     return Promise.resolve();
@@ -501,7 +518,8 @@ var chrome = {
   geckoProfiler: geckoProfiler,
   notifications: notifications,
   i18n: i18n,
-  webNavigation: webNavigation
+  webNavigation: webNavigation,
+  extension: extension
 };
  // Firefox uses 'browser' but aliases it to chrome
 
