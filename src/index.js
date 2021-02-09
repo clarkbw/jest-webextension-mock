@@ -8,6 +8,7 @@ import { notifications } from './notifications';
 import { i18n } from './i18n';
 import { webNavigation } from './webNavigation';
 import { extension } from './extension';
+import { downloads } from './downloads';
 
 // Firefox specific API
 import { geckoProfiler } from './geckoProfiler';
@@ -24,6 +25,7 @@ const chrome = {
   i18n,
   webNavigation,
   extension,
+  downloads,
 };
 
 export { chrome };
