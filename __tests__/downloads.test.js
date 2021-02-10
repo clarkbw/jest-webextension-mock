@@ -9,6 +9,11 @@ describe('browser.downloads', () => {
     expect(chrome.downloads.acceptDanger).toHaveBeenLastCalledWith(downloadId, callback);
     expect(callback).toHaveBeenCalled();
   });
+  test('acceptDanger Promise', () => {
+    const downloadId = 1;
+
+    expect(chrome.downloads.acceptDanger(downloadId)).resolves.toBeUndefined();
+  });
   test('cancel', (done) => {
     const downloadId = 1;
     const callback = jest.fn(() => done());
@@ -18,6 +23,11 @@ describe('browser.downloads', () => {
     expect(chrome.downloads.cancel).toHaveBeenCalledTimes(1);
     expect(chrome.downloads.cancel).toHaveBeenLastCalledWith(downloadId, callback);
     expect(callback).toHaveBeenCalled();
+  });
+  test('cancel Promise', () => {
+    const downloadId = 1;
+
+    expect(chrome.downloads.cancel(downloadId)).resolves.toBeUndefined();
   });
   test('download', (done) => {
     const options = {};
@@ -29,6 +39,11 @@ describe('browser.downloads', () => {
     expect(chrome.downloads.download).toHaveBeenLastCalledWith(options, callback);
     expect(callback).toHaveBeenCalled();
   });
+  test('download Promise', () => {
+    const options = {};
+
+    expect(chrome.downloads.download(options)).resolves.toBeUndefined();
+  });
   test('erase', (done) => {
     const query = {};
     const callback = jest.fn(() => done());
@@ -39,6 +54,11 @@ describe('browser.downloads', () => {
     expect(chrome.downloads.erase).toHaveBeenLastCalledWith(query, callback);
     expect(callback).toHaveBeenCalled();
   });
+  test('erase Promise', () => {
+    const query = {};
+
+    expect(chrome.downloads.erase(query)).resolves.toBeUndefined();
+  });
   test('getFileIcon', (done) => {
     const downloadId = 1;
     const callback = jest.fn(() => done());
@@ -48,6 +68,11 @@ describe('browser.downloads', () => {
     expect(chrome.downloads.getFileIcon).toHaveBeenCalledTimes(1);
     expect(chrome.downloads.getFileIcon).toHaveBeenLastCalledWith(downloadId, callback);
     expect(callback).toHaveBeenCalled();
+  });
+  test('getFileIcon Promise', () => {
+    const downloadId = 1;
+
+    expect(chrome.downloads.getFileIcon(downloadId)).resolves.toBeUndefined();
   });
   test('open', () => {
     const downloadId = 1;
@@ -67,6 +92,11 @@ describe('browser.downloads', () => {
     expect(chrome.downloads.pause).toHaveBeenLastCalledWith(downloadId, callback);
     expect(callback).toHaveBeenCalled();
   });
+  test('pause Promise', () => {
+    const downloadId = 1;
+
+    expect(chrome.downloads.pause(downloadId)).resolves.toBeUndefined();
+  });
   test('removeFile', (done) => {
     const downloadId = 1;
     const callback = jest.fn(() => done());
@@ -76,6 +106,11 @@ describe('browser.downloads', () => {
     expect(chrome.downloads.removeFile).toHaveBeenCalledTimes(1);
     expect(chrome.downloads.removeFile).toHaveBeenLastCalledWith(downloadId, callback);
     expect(callback).toHaveBeenCalled();
+  });
+  test('removeFile Promise', () => {
+    const downloadId = 1;
+
+    expect(chrome.downloads.removeFile(downloadId)).resolves.toBeUndefined();
   });
   test('resume', (done) => {
     const downloadId = 1;
@@ -87,6 +122,11 @@ describe('browser.downloads', () => {
     expect(chrome.downloads.resume).toHaveBeenLastCalledWith(downloadId, callback);
     expect(callback).toHaveBeenCalled();
   });
+  test('resume Promise', () => {
+    const downloadId = 1;
+
+    expect(chrome.downloads.resume(downloadId)).resolves.toBeUndefined();
+  });
   test('search', (done) => {
     const query = {};
     const callback = jest.fn(() => done());
@@ -96,6 +136,11 @@ describe('browser.downloads', () => {
     expect(chrome.downloads.search).toHaveBeenCalledTimes(1);
     expect(chrome.downloads.search).toHaveBeenLastCalledWith(query, callback);
     expect(callback).toHaveBeenCalled();
+  });
+  test('search Promise', () => {
+    const query = {};
+
+    expect(chrome.downloads.search(query)).resolves.toBeUndefined();
   });
   test('setShelfEnabled', () => {
     expect(jest.isMockFunction(chrome.downloads.setShelfEnabled)).toBe(true);
