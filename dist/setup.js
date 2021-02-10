@@ -78,7 +78,7 @@ var runtime = {
 // https://developer.chrome.com/extensions/tabs
 var tabs = {
   get: jest.fn(function () {
-    var cb = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : function () {};
+    var cb = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : function () { };
     return cb({});
   }),
   getCurrent: jest.fn(function (cb) {
@@ -119,23 +119,23 @@ var tabs = {
   }),
   duplicate: jest.fn(function () {
     var id = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
-    var cb = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : function () {};
+    var cb = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : function () { };
     return cb(Object.assign({}, {
       id: id
     }));
   }),
   query: jest.fn(function () {
-    var cb = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : function () {};
+    var cb = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : function () { };
     return cb([{}]);
   }),
   highlight: jest.fn(function () {
-    var cb = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : function () {};
+    var cb = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : function () { };
     return cb();
   }),
   update: jest.fn(function () {
     var id = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
     var props = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-    var cb = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : function () {};
+    var cb = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : function () { };
     return cb(Object.assign({}, props, {
       id: id
     }));
@@ -143,7 +143,7 @@ var tabs = {
   move: jest.fn(function () {
     var ids = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
     var props = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-    var cb = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : function () {};
+    var cb = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : function () { };
     return cb(ids.map(function (id) {
       return Object.assign({}, props, {
         id: id
@@ -481,6 +481,22 @@ var extension = {
   getURL: jest.fn()
 };
 
+var downloads = {
+  acceptDanger: jest.fn((downloadId, cb) => cbOrPromise(cb)),
+  cancel: jest.fn((downloadId, cb) => cbOrPromise(cb)),
+  download: jest.fn((options, cb) => cbOrPromise(cb)),
+  erase: jest.fn((query, cb) => cbOrPromise(cb)),
+  getFileIcon: jest.fn((downloadId, cb) => cbOrPromise(cb)),
+  open: jest.fn(),
+  pause: jest.fn((downloadId, cb) => cbOrPromise(cb)),
+  removeFile: jest.fn((downloadId, cb) => cbOrPromise(cb)),
+  resume: jest.fn((downloadId, cb) => cbOrPromise(cb)),
+  search: jest.fn((query, cb) => cbOrPromise(cb)),
+  setShelfEnabled: jest.fn(),
+  show: jest.fn(),
+  showDefaultFolder: jest.fn(),
+};
+
 var geckoProfiler = {
   stop: jest.fn(function () {
     return Promise.resolve();
@@ -519,9 +535,10 @@ var chrome = {
   notifications: notifications,
   i18n: i18n,
   webNavigation: webNavigation,
-  extension: extension
+  extension: extension,
+  downloads: downloads,
 };
- // Firefox uses 'browser' but aliases it to chrome
+// Firefox uses 'browser' but aliases it to chrome
 
 /**
  * This is a setup file we specify as our 'main' entry point
