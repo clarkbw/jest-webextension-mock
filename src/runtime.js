@@ -1,4 +1,5 @@
 export let onMessageListeners = [];
+export let onMessageExternalListeners = [];
 export const runtime = {
   connect: jest.fn(function ({ name }) {
     return {
@@ -32,6 +33,17 @@ export const runtime = {
       );
     }),
     hasListener: jest.fn((listener) => onMessageListeners.includes(listener)),
+  },
+  onMessageExternal: {
+    addListener: jest.fn((listener) => {
+      onMessageExternalListeners.push(listener);
+    }),
+    removeListener: jest.fn((listener) => {
+      onMessageExternalListeners = onMessageExternalListeners.filter(
+        (lstn) => lstn !== listener
+      );
+    }),
+    hasListener: jest.fn((listener) => onMessageExternalListeners.includes(listener)),
   },
   onConnect: {
     addListener: jest.fn(),
