@@ -108,13 +108,26 @@ describe('browser.storage', () => {
       test('clear promise', () => {
         return expect(storage.clear()).resolves.toBeUndefined();
       });
+      test('onChanged', () => {
+        expect(storage).toHaveProperty('onChanged');
+        expect(jest.isMockFunction(storage.onChanged.addListener)).toBe(true);
+      });
       test('real scenario', (done) => {
         expect(jest.isMockFunction(storage.get)).toBe(true);
         expect(jest.isMockFunction(storage.set)).toBe(true);
         expect(jest.isMockFunction(storage.remove)).toBe(true);
         expect(jest.isMockFunction(storage.clear)).toBe(true);
+
+        // register onChanged listener
+        const onChangedListener = jest.fn();
+        storage.onChanged.addListener(onChangedListener);
         // set keys
         storage.set({ key: 'value', foo: 'bar', foo2: 'bar2' }, () => {
+          expect(onChangedListener).toHaveBeenCalledWith({
+            key: { newValue: 'value' },
+            foo: { newValue: 'bar' },
+            foo2: { newValue: 'bar2' },
+          });
           // get 'key'
           storage.get(['key'], (result) => {
             expect(result).toBeDefined();
@@ -122,20 +135,34 @@ describe('browser.storage', () => {
             expect(result).toHaveProperty('key', 'value');
             expect(result).not.toHaveProperty('foo');
             expect(result).not.toHaveProperty('foo2');
-            // remove 'key'
-            storage.remove('key', () => {
-              // get all values
-              storage.get(null, (result) => {
-                expect(result).toHaveProperty('key', undefined);
-                expect(result).toHaveProperty('foo', 'bar');
-                expect(result).toHaveProperty('foo2', 'bar2');
-                // clear values
-                storage.clear(() => {
-                  storage.get(['key', 'foo', 'foo2'], (result) => {
-                    expect(result).toHaveProperty('key', undefined);
-                    expect(result).toHaveProperty('foo', undefined);
-                    expect(result).toHaveProperty('foo2', undefined);
-                    done();
+            // set a new value for 'key'
+            storage.set({ key: 'other value' }, () => {
+              expect(onChangedListener).toHaveBeenCalledWith({
+                key: { oldValue: 'value', newValue: 'other value' },
+              });
+              // remove 'key'
+              storage.remove('key', () => {
+                expect(onChangedListener).toHaveBeenCalledWith({
+                  key: { oldValue: 'other value' },
+                });
+                // get all values
+                storage.get(null, (result) => {
+                  expect(result).toHaveProperty('key', undefined);
+                  expect(result).toHaveProperty('foo', 'bar');
+                  expect(result).toHaveProperty('foo2', 'bar2');
+                  // clear values
+                  storage.clear(() => {
+                    expect(onChangedListener).toHaveBeenCalledWith({
+                      foo: { oldValue: 'bar' },
+                      foo2: { oldValue: 'bar2' },
+                    });
+
+                    storage.get(['key', 'foo', 'foo2'], (result) => {
+                      expect(result).toHaveProperty('key', undefined);
+                      expect(result).toHaveProperty('foo', undefined);
+                      expect(result).toHaveProperty('foo2', undefined);
+                      done();
+                    });
                   });
                 });
               });
