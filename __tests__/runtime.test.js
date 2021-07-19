@@ -3,6 +3,9 @@ beforeEach(() => {
   browser.runtime.onMessage.addListener.mockClear();
   browser.runtime.onMessage.removeListener.mockClear();
   browser.runtime.onMessage.hasListener.mockClear();
+  browser.runtime.onMessageExternal.addListener.mockClear();
+  browser.runtime.onMessageExternal.removeListener.mockClear();
+  browser.runtime.onMessageExternal.hasListener.mockClear();
 });
 
 describe('browser.runtime', () => {
@@ -77,6 +80,36 @@ describe('browser.runtime', () => {
     const returnVal = browser.runtime.onMessage.hasListener(callback);
     expect(returnVal).toBe(true);
     expect(browser.runtime.onMessage.hasListener).toHaveBeenCalledTimes(1);
+    expect(callback).toHaveBeenCalledTimes(0);
+  });
+  test(`onMessageExternal.addListener`, () => {
+    const callback = jest.fn();
+    expect(jest.isMockFunction(browser.runtime.onMessageExternal.addListener)).toBe(
+      true
+    );
+    browser.runtime.onMessageExternal.addListener(callback);
+    expect(browser.runtime.onMessageExternal.addListener).toHaveBeenCalledTimes(1);
+    expect(callback).toHaveBeenCalledTimes(0);
+  });
+  test(`onMessageExternal.removeListener`, () => {
+    const callback = jest.fn();
+    expect(jest.isMockFunction(browser.runtime.onMessageExternal.removeListener)).toBe(
+      true
+    );
+    browser.runtime.onMessageExternal.removeListener(callback);
+    expect(browser.runtime.onMessageExternal.hasListener(callback)).toBe(false);
+    expect(browser.runtime.onMessageExternal.removeListener).toHaveBeenCalledTimes(1);
+    expect(callback).toHaveBeenCalledTimes(0);
+  });
+  test(`onMessageExternal.hasListener`, () => {
+    const callback = jest.fn();
+    expect(jest.isMockFunction(browser.runtime.onMessageExternal.hasListener)).toBe(
+      true
+    );
+    browser.runtime.onMessageExternal.addListener(callback);
+    const returnVal = browser.runtime.onMessageExternal.hasListener(callback);
+    expect(returnVal).toBe(true);
+    expect(browser.runtime.onMessageExternal.hasListener).toHaveBeenCalledTimes(1);
     expect(callback).toHaveBeenCalledTimes(0);
   });
   ['addListener', 'removeListener', 'hasListener'].forEach((method) => {
