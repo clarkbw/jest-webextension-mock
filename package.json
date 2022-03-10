@@ -1,6 +1,6 @@
 {
-    "name": "jest-webextension-mock",
-    "version": "3.5.0",
+    "name": "@jveal/jest-webextension-mock",
+    "version": "3.5.3",
     "description": "Mock the components of a WebExtension",
     "main": "dist/setup.js",
     "module": "src/setup.js",

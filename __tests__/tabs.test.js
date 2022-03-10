@@ -94,13 +94,26 @@ describe('browser.tabs', () => {
       { id: 3, pinned: true },
     ]);
   });
-  ['addListener', 'removeListener', 'hasListener'].forEach((method) => {
-    test(`onUpdated.${method}`, () => {
-      const callback = jest.fn();
-      expect(jest.isMockFunction(browser.tabs.onUpdated[method])).toBe(true);
-      browser.tabs.onUpdated[method](callback);
-      expect(browser.tabs.onUpdated[method]).toHaveBeenCalledTimes(1);
-      expect(callback).toHaveBeenCalledTimes(0);
+  [
+    'onCreated',
+    'onUpdated',
+    'onMoved',
+    'onActivated',
+    'onHighlighted',
+    'onDetached',
+    'onAttached',
+    'onRemoved',
+    'onReplaced',
+    'onZoomChange',
+  ].forEach((event) => {
+    ['addListener', 'removeListener', 'hasListener'].forEach((method) => {
+      test(`${event}.${method}`, () => {
+        const callback = jest.fn();
+        expect(jest.isMockFunction(browser.tabs[event][method])).toBe(true);
+        browser.tabs[event][method](callback);
+        expect(browser.tabs[event][method]).toHaveBeenCalledTimes(1);
+        expect(callback).toHaveBeenCalledTimes(0);
+      });
     });
   });
   test('reload', (done) => {
