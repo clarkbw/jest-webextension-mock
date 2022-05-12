@@ -52,5 +52,10 @@ export const tabs = {
     }
     return Promise.resolve();
   }),
-  reload: jest.fn((tabId, reloadProperties, cb) => cb()),
+  reload: jest.fn((tabId, reloadProperties, cb) => {
+    if (cb !== undefined) {
+      return cb();
+    }
+    return Promise.resolve();
+  }),
 };
