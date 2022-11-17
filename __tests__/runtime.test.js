@@ -139,7 +139,7 @@ describe('browser.runtime', () => {
   });
   test('getManifest', () => {
     expect(jest.isMockFunction(browser.runtime.getManifest)).toBe(true);
-    browser.runtime.getManifest();
+    expect(browser.runtime.getManifest()).toEqual({ manifest_version: 3 });
     expect(browser.runtime.getManifest).toHaveBeenCalledTimes(1);
   });
 });
