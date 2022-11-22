@@ -59,4 +59,5 @@ export const runtime = {
     return path;
   }),
   openOptionsPage: jest.fn(),
+  getManifest: jest.fn(() => ({ manifest_version: 3 })),
 };

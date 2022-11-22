@@ -137,4 +137,9 @@ describe('browser.runtime', () => {
     browser.runtime.openOptionsPage();
     expect(browser.runtime.openOptionsPage).toHaveBeenCalledTimes(1);
   });
+  test('getManifest', () => {
+    expect(jest.isMockFunction(browser.runtime.getManifest)).toBe(true);
+    expect(browser.runtime.getManifest()).toEqual({ manifest_version: 3 });
+    expect(browser.runtime.getManifest).toHaveBeenCalledTimes(1);
+  });
 });
