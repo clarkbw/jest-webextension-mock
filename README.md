@@ -104,18 +104,7 @@ yarn test
 
 ## Publish
 
-To publish a new release, follow these steps:
+Publishing new releases is automated via the GitHub Action https://github.com/mikeal/merge-release tool. 
 
-```
-git checkout -b new-release
-yarn run build
-yarn run prettier
-git commit -a -m 'updating to the latest build release'
-# merge pull request, delete branch
-git checkout master
-git pull
-npm version `${version}`
-npm publish
-git push --tags
-## edit release notes
-```
+To ensure your feature is properly released prefix your commit message with `feat` for any new feature. For example: `feat: new API` and this will bump the minor release number.  All other changes will be assumed as patch releases unless you include the string `BREAKING CHANGE` in your commit message or description which will trigger a new major release.  (do not do this unless absolutely required)
+
