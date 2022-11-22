@@ -25,7 +25,7 @@ jobs:
     - name: Yarn Test
       run: yarn test
     - name: Publish
-      if: github.ref == 'refs/heads/master'
+      if: github.ref == 'refs/heads/main'
       uses: mikeal/merge-release@master
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
