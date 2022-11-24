@@ -28,7 +28,7 @@ jobs:
       - run: git status --porcelain dist/setup.js
       - name: check dist build
         run: |
-          if git diff --exit-code dist/setup.js; then
+          if ! git diff --quiet --exit-code dist/setup.js; then
             echo "::error run `npm run build` and commit the dist/setup.js file"
             exit 1
           fi
