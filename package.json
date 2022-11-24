@@ -44,5 +44,6 @@
         "setupFiles": [
             "./__setups__/chrome.js"
         ]
-    }
+    },
+    "dependencies": {}
 }
