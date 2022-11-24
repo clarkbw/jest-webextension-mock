@@ -193,17 +193,11 @@ var tabs = {
 function _typeof(obj) {
   "@babel/helpers - typeof";
 
-  if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
-    _typeof = function (obj) {
-      return typeof obj;
-    };
-  } else {
-    _typeof = function (obj) {
-      return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
-    };
-  }
-
-  return _typeof(obj);
+  return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) {
+    return typeof obj;
+  } : function (obj) {
+    return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+  }, _typeof(obj);
 }
 
 var store = {};
@@ -425,7 +419,7 @@ var commands = {
   }
 };
 
-var cbOrPromise = function cbOrPromise(cb, value) {
+var cbOrPromise$1 = function cbOrPromise(cb, value) {
   if (cb !== undefined) {
     return cb(value);
   }
@@ -442,22 +436,22 @@ var create = function create(notificationId, options, cb) {
     cb = options;
   }
 
-  return cbOrPromise(cb, notificationId);
+  return cbOrPromise$1(cb, notificationId);
 };
 
 var notifications = {
   create: jest.fn(create),
   update: jest.fn(function (notificationId, options, cb) {
-    return cbOrPromise(cb, true);
+    return cbOrPromise$1(cb, true);
   }),
   clear: jest.fn(function (notificationId, cb) {
-    return cbOrPromise(cb, true);
+    return cbOrPromise$1(cb, true);
   }),
   getAll: jest.fn(function (cb) {
-    return cbOrPromise(cb, []);
+    return cbOrPromise$1(cb, []);
   }),
   getPermissionLevel: jest.fn(function (cb) {
-    return cbOrPromise(cb, 'granted');
+    return cbOrPromise$1(cb, 'granted');
   }),
   onClosed: {
     addListener: jest.fn()
@@ -500,7 +494,7 @@ var extension = {
   getURL: jest.fn()
 };
 
-var cbOrPromise$1 = function cbOrPromise(cb, value) {
+var cbOrPromise = function cbOrPromise(cb, value) {
   if (cb !== undefined) {
     return cb(value);
   }
@@ -510,32 +504,32 @@ var cbOrPromise$1 = function cbOrPromise(cb, value) {
 
 var downloads = {
   acceptDanger: jest.fn(function (downloadId, cb) {
-    return cbOrPromise$1(cb);
+    return cbOrPromise(cb);
   }),
   cancel: jest.fn(function (downloadId, cb) {
-    return cbOrPromise$1(cb);
+    return cbOrPromise(cb);
   }),
   download: jest.fn(function (options, cb) {
-    return cbOrPromise$1(cb);
+    return cbOrPromise(cb);
   }),
   erase: jest.fn(function (query, cb) {
-    return cbOrPromise$1(cb);
+    return cbOrPromise(cb);
   }),
   getFileIcon: jest.fn(function (downloadId, cb) {
-    return cbOrPromise$1(cb);
+    return cbOrPromise(cb);
   }),
   open: jest.fn(),
   pause: jest.fn(function (downloadId, cb) {
-    return cbOrPromise$1(cb);
+    return cbOrPromise(cb);
   }),
   removeFile: jest.fn(function (downloadId, cb) {
-    return cbOrPromise$1(cb);
+    return cbOrPromise(cb);
   }),
   resume: jest.fn(function (downloadId, cb) {
-    return cbOrPromise$1(cb);
+    return cbOrPromise(cb);
   }),
   search: jest.fn(function (query, cb) {
-    return cbOrPromise$1(cb);
+    return cbOrPromise(cb);
   }),
   setShelfEnabled: jest.fn(),
   show: jest.fn(),
