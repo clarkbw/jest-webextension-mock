@@ -2,17 +2,16 @@
 
 ## Install
 
+For npm:
+
+```bash
+npm i --save-dev jest-webextension-mock
+```
 
 For yarn:
 
 ```bash
 yarn add --dev jest-webextension-mock
-```
-
-For npm:
-
-```bash
-npm i --save-dev jest-webextension-mock
 ```
 
 ## Setup
@@ -98,8 +97,8 @@ it('should toggle the profiler on from stopped', () => {
 ## Development
 
 ```
-yarn install
-yarn test
+npm install
+npm test
 ```
 
 ## Publish
