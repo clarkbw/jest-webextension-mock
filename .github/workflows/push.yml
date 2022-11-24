@@ -26,4 +26,10 @@ jobs:
       - run: npm test
       - run: npm run build --if-present
       - run: git status --porcelain dist/setup.js
+      - name: check dist build
+        run: |
+          if ! git diff --quiet --exit-code dist/setup.js; then
+            echo "::error run 'npm run build' and commit the dist/setup.js file"
+            exit 1
+          fi
       - uses: codecov/codecov-action@v3
