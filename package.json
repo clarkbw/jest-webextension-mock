@@ -3,6 +3,7 @@
     "version": "3.5.0",
     "description": "Mock the components of a WebExtension",
     "main": "dist/setup.js",
+    "type": "module",
     "module": "src/setup.js",
     "author": "Bryan Clark <clarkbw@gmail.com> (https://twitter.com/clarkbw)",
     "license": "ISC",
@@ -13,23 +14,18 @@
     "scripts": {
         "test": "jest",
         "build": "rollup -c",
-        "prettier": "prettier --write \"{config,src,__{tests,setups}__}/**/*.js\" rollup.config.js",
-        "eslint-check": "eslint --print-config .eslintrc.js | eslint-config-prettier-check"
+        "prettier": "prettier --write \"{config,src,__{tests,setups}__}/**/*.js\" rollup.config.js"
     },
     "devDependencies": {
         "@babel/core": "^7.11.6",
         "@babel/preset-env": "^7.11.5",
-        "babel-core": "^7.0.0-bridge.0",
-        "babel-jest": "^26.5.2",
-        "eslint": "^7.11.0",
-        "eslint-config-prettier": "^6.12.0",
-        "eslint-plugin-prettier": "^3.1.4",
-        "jest": "^26.5.3",
+        "@rollup/plugin-babel": "^6.0.2",
+        "@rollup/plugin-node-resolve": "^15.0.1",
+        "babel-jest": "^29.3.1",
+        "jest": "^29.3.1",
         "prettier": "^2.1.2",
-        "rollup": "^2.30.0",
-        "rollup-plugin-babel": "^4.4.0",
-        "rollup-plugin-node-resolve": "^5.2.0",
-        "rollup-watch": "^4.0.0"
+        "rollup": "^3.4.0",
+        "rollup-watch": "^4.3.1"
     },
     "jest": {
         "bail": true,
@@ -44,6 +40,5 @@
         "setupFiles": [
             "./__setups__/chrome.js"
         ]
-    },
-    "dependencies": {}
+    }
 }
