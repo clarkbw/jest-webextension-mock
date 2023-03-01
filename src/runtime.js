@@ -57,7 +57,7 @@ export const runtime = {
   },
   getURL: jest.fn(function (path) {
     const origin = globalThis[Symbol.for('jest-webextension-mock')].extensionPath;
-    return new URL(path, origin);
+    return String(new URL(path, origin));
   }),
   openOptionsPage: jest.fn(),
   getManifest: jest.fn(() => ({ manifest_version: 3 })),
