@@ -29,9 +29,10 @@ describe('browser.runtime', () => {
   });
   test('getURL', () => {
     const path = 'TEST_PATH';
+    const extensionOriginURL = globalThis[Symbol.for('jest-webextension-mock')].extensionPath;
     expect(jest.isMockFunction(browser.runtime.getURL)).toBe(true);
     const respPath = browser.runtime.getURL(path);
-    expect(respPath).toEqual(path);
+    expect(respPath).toEqual(extensionOriginURL + path);
     expect(browser.runtime.getURL).toHaveBeenCalledTimes(1);
   });
   test('sendMessage', (done) => {
