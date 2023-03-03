@@ -13,6 +13,11 @@ import { downloads } from './downloads';
 // Firefox specific API
 import { geckoProfiler } from './geckoProfiler';
 
+globalThis[Symbol.for('jest-webextension-mock')] = {
+	extensionPath: 'moz-extension://8b413e68-1e0d-4cad-b98e-1eb000799783/',
+  ...globalThis[Symbol.for('jest-webextension-mock')]
+};
+
 const chrome = {
   omnibox,
   tabs,

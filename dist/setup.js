@@ -1,5 +1,56 @@
 'use strict';
 
+function ownKeys(object, enumerableOnly) {
+  var keys = Object.keys(object);
+
+  if (Object.getOwnPropertySymbols) {
+    var symbols = Object.getOwnPropertySymbols(object);
+    enumerableOnly && (symbols = symbols.filter(function (sym) {
+      return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+    })), keys.push.apply(keys, symbols);
+  }
+
+  return keys;
+}
+
+function _objectSpread2(target) {
+  for (var i = 1; i < arguments.length; i++) {
+    var source = null != arguments[i] ? arguments[i] : {};
+    i % 2 ? ownKeys(Object(source), !0).forEach(function (key) {
+      _defineProperty(target, key, source[key]);
+    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) {
+      Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
+    });
+  }
+
+  return target;
+}
+
+function _typeof(obj) {
+  "@babel/helpers - typeof";
+
+  return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) {
+    return typeof obj;
+  } : function (obj) {
+    return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+  }, _typeof(obj);
+}
+
+function _defineProperty(obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key] = value;
+  }
+
+  return obj;
+}
+
 // https://developer.chrome.com/extensions/omnibox
 var omnibox = {
   setDefaultSuggestion: jest.fn(),
@@ -84,7 +135,8 @@ var runtime = {
     hasListener: jest.fn()
   },
   getURL: jest.fn(function (path) {
-    return path;
+    var origin = globalThis[Symbol["for"]('jest-webextension-mock')].extensionPath;
+    return String(new URL(path, origin));
   }),
   openOptionsPage: jest.fn(),
   getManifest: jest.fn(function () {
@@ -189,16 +241,6 @@ var tabs = {
     return cb();
   })
 };
-
-function _typeof(obj) {
-  "@babel/helpers - typeof";
-
-  return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) {
-    return typeof obj;
-  } : function (obj) {
-    return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
-  }, _typeof(obj);
-}
 
 var store = {};
 
@@ -563,6 +605,9 @@ var geckoProfiler = {
   }
 };
 
+globalThis[Symbol["for"]('jest-webextension-mock')] = _objectSpread2({
+  extensionPath: 'moz-extension://8b413e68-1e0d-4cad-b98e-1eb000799783/'
+}, globalThis[Symbol["for"]('jest-webextension-mock')]);
 var chrome = {
   omnibox: omnibox,
   tabs: tabs,
