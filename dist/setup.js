@@ -578,6 +578,20 @@ var downloads = {
   showDefaultFolder: jest.fn()
 };
 
+// https://developer.chrome.com/extensions/permissions
+var permissions = {
+  contains: jest.fn(),
+  getAll: jest.fn(),
+  remove: jest.fn(),
+  request: jest.fn(),
+  onAdded: {
+    addListener: jest.fn()
+  },
+  onRemoved: {
+    addListener: jest.fn()
+  }
+};
+
 var geckoProfiler = {
   stop: jest.fn(function () {
     return Promise.resolve();
@@ -620,7 +634,8 @@ var chrome = {
   i18n: i18n,
   webNavigation: webNavigation,
   extension: extension,
-  downloads: downloads
+  downloads: downloads,
+  permissions: permissions
 };
  // Firefox uses 'browser' but aliases it to chrome
 
