@@ -102,6 +102,22 @@ describe('browser.tabs', () => {
       expect(browser.tabs.onUpdated[method]).toHaveBeenCalledTimes(1);
       expect(callback).toHaveBeenCalledTimes(0);
     });
+
+    test(`onRemoved.${method}`, () => {
+      const callback = jest.fn();
+      expect(jest.isMockFunction(browser.tabs.onRemoved[method])).toBe(true);
+      browser.tabs.onRemoved[method](callback);
+      expect(browser.tabs.onRemoved[method]).toHaveBeenCalledTimes(1);
+      expect(callback).toHaveBeenCalledTimes(0);
+    });
+
+    test(`onCreated.${method}`, () => {
+      const callback = jest.fn();
+      expect(jest.isMockFunction(browser.tabs.onCreated[method])).toBe(true);
+      browser.tabs.onCreated[method](callback);
+      expect(browser.tabs.onCreated[method]).toHaveBeenCalledTimes(1);
+      expect(callback).toHaveBeenCalledTimes(0);
+    });
   });
   test('reload', (done) => {
     const callback = jest.fn(() => done());
