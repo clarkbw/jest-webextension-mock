@@ -226,6 +226,16 @@ var tabs = {
     removeListener: jest.fn(),
     hasListener: jest.fn()
   },
+  onRemoved: {
+    addListener: jest.fn(),
+    removeListener: jest.fn(),
+    hasListener: jest.fn()
+  },
+  onCreated: {
+    addListener: jest.fn(),
+    removeListener: jest.fn(),
+    hasListener: jest.fn()
+  },
   sendMessage: jest.fn(function (tabId, message, cb) {
     onMessageListeners.forEach(function (listener) {
       return listener(tabId, message);
